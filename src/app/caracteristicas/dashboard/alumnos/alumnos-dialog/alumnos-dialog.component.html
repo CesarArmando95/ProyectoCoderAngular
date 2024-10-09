@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>
+    {{ data?.editarAlumno ? "Editando" : "Creando" }} alumno
+  </h1>
+  
+  <div mat-dialog-content>
+    <form [formGroup]="alumnoFormulario">
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Nombre</mat-label>
+            <input formControlName="nombre" matInput type="text" />
+            <mat-error>
+              @if(alumnoFormulario.get('nombre')?.hasError('required')) { Este campo es
+              requerido }
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Apellido</mat-label>
+            <input formControlName="apellido" matInput type="text" />
+            <mat-error>
+              @if(alumnoFormulario.get('apellido')?.hasError('required')) { Este campo es
+              requerido }
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <div mat-dialog-actions>
+    <button mat-dialog-close mat-button>Cancelar</button>
+    <button (click)="onSave()" mat-button>Guardar</button>
+  </div>

@@ -1,0 +1,30 @@
+<mat-drawer-container class="example-container" fullscreen>
+    <!-- SIDEBAR (MENU LATERAL) -->
+    <mat-drawer #drawer class="example-sidenav fondo" mode="side">
+      <h2 class="posicion-titulo-menu">Menu</h2>
+      <mat-list role="list" class="posicion-elemntos-lista">
+        <mat-list-item role="listitem"><a href="">Usuarios</a></mat-list-item>
+        <mat-list-item role="listitem"><a href="">Alumnos</a></mat-list-item>
+        <mat-list-item role="listitem"><a href="">Maestros</a></mat-list-item>
+        <mat-list-item role="listitem"><a href="">Materias</a></mat-list-item>
+      </mat-list>
+    </mat-drawer>
+  
+    <!-- AREA DERECHA (CONTENIDO) -->
+    <div class="example-sidenav-content">
+      <!-- TOOLBAR -->
+      <mat-toolbar class="fondo">
+        <button
+          (click)="drawer.toggle()"
+          mat-icon-button
+          class="example-icon"
+          aria-label="Example icon-button with menu icon"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>Lista de alumnos</span>
+      </mat-toolbar>
+    </div>
+    <app-alumnos />
+  </mat-drawer-container>
+  
