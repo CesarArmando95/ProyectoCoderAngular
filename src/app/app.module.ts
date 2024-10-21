@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashboardModule } from './funciones/dashboard/dashboard.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
@@ -14,7 +13,6 @@ import { provideNativeDateAdapter } from '@angular/material/core';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    DashboardModule
   ],
   providers: [
     provideAnimationsAsync(),

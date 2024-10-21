@@ -2,27 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Alumno } from '../../../modelos/alumno-model';
 import { AlumnosDialogComponent } from './alumnos-dialog/alumnos-dialog.component';
-
-const ALUMNOS: Alumno[] = [
-  {
-    id: 1,
-    nombre: 'Juan',
-    apellido: 'Perez',
-    edad: 20,
-    genero: 'Hombre',
-    creditos: 120,
-    fechaCreacion: new Date()
-  },
-  {
-    id: 2,
-    nombre: 'Olga',
-    apellido: 'Mari',
-    edad: 22,
-    genero: 'Mujer',
-    creditos: 150,
-    fechaCreacion: new Date()
-  }
-]
+import { AlumnoService } from '../../../core/services/alumnos.service';
 
 @Component({
   selector: 'app-alumnos',
@@ -31,13 +11,72 @@ const ALUMNOS: Alumno[] = [
 })
 export class AlumnosComponent {
   displayedColumns: string[] = ['id', 'nombre', 'edad', 'genero', 'creditos', 'fecha', 'acciones'];
-  dataSource = ALUMNOS;
+  dataSource: Alumno[] = [];
   
-  constructor(private matDialog: MatDialog){}
+  constructor(
+    private matDialog: MatDialog,
+    private alumnosServicio: AlumnoService
+  ){}
 
+  ngOnInit(): void {
+    this.cargarAlumnos();
+  }
+
+  cargarAlumnos(): void{
+    this.alumnosServicio.obtenerAlumnos().subscribe({
+      next: (alumnos) => {
+        this.dataSource = alumnos;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.log("Alumnos cargados");
+      }
+    })
+  }
+
+  agregarAlumno(resultado: Alumno):void{
+    this.alumnosServicio.agregarAlumno(resultado).subscribe({
+      next: (alumnos) => {
+        this.dataSource = alumnos;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.log("Alumno agregado");
+      }
+    })
+  }
+
+  actualizarAlumno(id: number, alumnoActualizado: Alumno): void{
+    this.alumnosServicio.actualizarAlumno(id, alumnoActualizado).subscribe({
+      next: (alumnos) => {
+        this.dataSource = alumnos;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        console.log("Alumno actualizado");
+      }
+    })
+  }
+  
   borrarAlumno(id: number) {
     if (confirm('Esta seguro?')) {
-      this.dataSource = this.dataSource.filter((alumno) => alumno.id !== id);
+      this.alumnosServicio.borrarAlumno(id).subscribe({
+        next: (alumnos) => {
+          this.dataSource = alumnos;
+        },
+        error: (error) => {
+          console.error(error);
+        },
+        complete: () => {
+          console.log("Alumno borrado");
+        }
+      })
     }
   }
 
@@ -55,17 +94,20 @@ export class AlumnosComponent {
         next: (resultado) => {
           if (!!resultado) {
             if (editarAlumno) {
-              this.dataSource = this.dataSource.map((alumno) =>
-                alumno.id === editarAlumno.id ? { ...alumno, ...resultado } : alumno
-              );
+              //this.dataSource = this.dataSource.map((alumno) =>
+                //alumno.id === editarAlumno.id ? { ...alumno, ...resultado } : alumno
+              //);
+              this.actualizarAlumno(editarAlumno.id, resultado);
             } else {
-              this.dataSource = [...this.dataSource, resultado];
+              this.agregarAlumno(resultado);
             }
           }
         },
       });
   }
+
 }
+
 
 //función para evitar repitir id cuando se crea un nuevo alumno
 function obtenerMaximoId(alumnos: Alumno[]): number{

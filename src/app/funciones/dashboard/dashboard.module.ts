@@ -7,7 +7,6 @@ import { DashboardComponent } from './dashboard.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
-import { AlumnosModule } from './alumnos/alumnos.module';
 
 import { CorpatidasModule } from '../../compartidas/compartidas.module';
 
@@ -18,7 +17,6 @@ import { CorpatidasModule } from '../../compartidas/compartidas.module';
     DashboardRoutingModule,
     MatSidenavModule,
     MatToolbarModule,
-    AlumnosModule,
     CorpatidasModule,
     MatListModule
 
