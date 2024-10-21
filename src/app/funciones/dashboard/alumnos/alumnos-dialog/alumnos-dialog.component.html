@@ -25,6 +25,39 @@
             </mat-error>
           </mat-form-field>
         </div>
+        <div class="col-4">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Edad</mat-label>
+            <input formControlName="edad" matInput type="number" />
+            <mat-error>
+              @if(alumnoFormulario.get('edad')?.hasError('required')) { Este campo es
+              requerido }
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>seleccione el genero de la persona</mat-label>
+              <select matNativeControl required formControlName="genero">
+                <option value="Hombre">Hombre</option>
+                <option value="Mujer">Mujer</option>
+              </select>
+              @if (alumnoFormulario.get('genero')?.hasError('required')) {
+                <mat-error>Este campo es
+                  requerido</mat-error>
+              }
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Creditos</mat-label>
+            <input formControlName="creditos" matInput type="number" />
+            <mat-error>
+              @if(alumnoFormulario.get('creditos')?.hasError('required')) { Este campo es
+              requerido }
+            </mat-error>
+          </mat-form-field>
+        </div>
       </div>
     </form>
   </div>

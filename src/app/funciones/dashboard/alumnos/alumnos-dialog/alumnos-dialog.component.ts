@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { Alumno } from '../../../../modelos/alumno-model';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 interface AlumnoDialogDatos{
@@ -14,7 +14,6 @@ interface AlumnoDialogDatos{
 export class AlumnosDialogComponent {
   alumnoFormulario: FormGroup;
   tamano?: number;
-
   constructor(
     private matDialogRef: MatDialogRef<AlumnosDialogComponent>,
     private formBuilder: FormBuilder,
@@ -24,6 +23,9 @@ export class AlumnosDialogComponent {
     this.alumnoFormulario = this.formBuilder.group({
       nombre: [null, [Validators.required]],
       apellido: [null, [Validators.required]],
+      edad: [null, [Validators.required]],
+      genero: [null, [Validators.required]],
+      creditos: [null, [Validators.required]]
     });
     this.patchFormValue();
   }

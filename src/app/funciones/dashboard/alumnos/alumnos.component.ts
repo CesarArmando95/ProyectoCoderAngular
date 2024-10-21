@@ -8,12 +8,18 @@ const ALUMNOS: Alumno[] = [
     id: 1,
     nombre: 'Juan',
     apellido: 'Perez',
+    edad: 20,
+    genero: 'Hombre',
+    creditos: 120,
     fechaCreacion: new Date()
   },
   {
     id: 2,
     nombre: 'Olga',
     apellido: 'Mari',
+    edad: 22,
+    genero: 'Mujer',
+    creditos: 150,
     fechaCreacion: new Date()
   }
 ]
@@ -24,7 +30,7 @@ const ALUMNOS: Alumno[] = [
   styleUrl: './alumnos.component.scss'
 })
 export class AlumnosComponent {
-  displayedColumns: string[] = ['id', 'nombre', 'fecha', 'acciones'];
+  displayedColumns: string[] = ['id', 'nombre', 'edad', 'genero', 'creditos', 'fecha', 'acciones'];
   dataSource = ALUMNOS;
   
   constructor(private matDialog: MatDialog){}
