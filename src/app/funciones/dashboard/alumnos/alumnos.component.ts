@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Alumno } from '../../../modelos/alumno-model';
 import { AlumnosDialogComponent } from './alumnos-dialog/alumnos-dialog.component';
 
-const ELEMENTOS: Alumno[] = [
+const ALUMNOS: Alumno[] = [
   {
     id: 1,
     nombre: 'Juan',
@@ -25,7 +25,7 @@ const ELEMENTOS: Alumno[] = [
 })
 export class AlumnosComponent {
   displayedColumns: string[] = ['id', 'nombre', 'fecha', 'acciones'];
-  dataSource = ELEMENTOS;
+  dataSource = ALUMNOS;
   
   constructor(private matDialog: MatDialog){}
 
