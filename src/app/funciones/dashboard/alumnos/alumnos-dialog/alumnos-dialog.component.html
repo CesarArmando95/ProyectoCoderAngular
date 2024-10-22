@@ -12,6 +12,9 @@
             <mat-error>
               @if(alumnoFormulario.get('nombre')?.hasError('required')) { Este campo es
               requerido }
+              @else if(alumnoFormulario.get('nombre')?.hasError('maxlength')){
+                El nombre no puede tener más de 30 caracteres
+              }
             </mat-error>
           </mat-form-field>
         </div>
@@ -22,6 +25,9 @@
             <mat-error>
               @if(alumnoFormulario.get('apellido')?.hasError('required')) { Este campo es
               requerido }
+              @else if(alumnoFormulario.get('apellido')?.hasError('maxlength')){
+                El nombre no puede tener más de 30 caracteres
+              }
             </mat-error>
           </mat-form-field>
         </div>
@@ -32,6 +38,9 @@
             <mat-error>
               @if(alumnoFormulario.get('edad')?.hasError('required')) { Este campo es
               requerido }
+              @else if(alumnoFormulario.get('edad')?.hasError('edadInvalida')){La edad 
+                debe estar entre 18 y 90 años
+              }
             </mat-error>
           </mat-form-field>
         </div>
@@ -55,6 +64,9 @@
             <mat-error>
               @if(alumnoFormulario.get('creditos')?.hasError('required')) { Este campo es
               requerido }
+              @else if (alumnoFormulario.get('creditos')?.hasError('creditosInvalidos')) {
+                Los creditos deben estar entre 0 a 2000
+              }
             </mat-error>
           </mat-form-field>
         </div>

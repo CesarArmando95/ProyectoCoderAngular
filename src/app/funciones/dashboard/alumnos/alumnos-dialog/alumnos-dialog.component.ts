@@ -1,11 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { Alumno } from '../../../../modelos/alumno-model';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-interface AlumnoDialogDatos{
-  editarAlumno?: Alumno;
-}
 
 @Component({
   selector: 'app-alumnos-dialog',
@@ -21,13 +17,21 @@ export class AlumnosDialogComponent {
   ) {
     this.tamano = data.tamano;
     this.alumnoFormulario = this.formBuilder.group({
-      nombre: [null, [Validators.required]],
-      apellido: [null, [Validators.required]],
-      edad: [null, [Validators.required]],
+      nombre: [null, [Validators.required, Validators.maxLength(30)]],
+      apellido: [null, [Validators.required, Validators.maxLength(30)]],
+      edad: [null, [Validators.required, this.edadValidator]],
       genero: [null, [Validators.required]],
-      creditos: [null, [Validators.required]]
+      creditos: [null, [Validators.required, this.creditosValidator]]
     });
     this.patchFormValue();
+  }
+
+  edadValidator(control: AbstractControl): ValidationErrors | null {
+    return (control.value< 18 || control.value > 90) ? { 'edadInvalida': true } : null;
+  }
+
+  creditosValidator(control: AbstractControl): ValidationErrors | null {
+    return (control.value<0 || control.value > 2000) ? {'creditosInvalidos': true } : null;
   }
 
   patchFormValue() {

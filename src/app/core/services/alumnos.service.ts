@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Alumno } from '../../modelos/alumno-model'; 
-import { delay, map, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 let ALUMNOS: Alumno[] = [
     {
