@@ -2,16 +2,25 @@
     <!-- SIDEBAR (MENU LATERAL) -->
     <mat-drawer #drawer class="example-sidenav fondo" mode="side">
       <mat-list role="list" class="posicion-elemntos-lista">
-        <mat-list-item role="listitem"><a href=""><mat-icon aria-hidden="false" fontIcon="person"></mat-icon>
+        <mat-list-item role="listitem"><a 
+          routerLinkActive="active"
+          routerLink="usuarios"
+          ><mat-icon aria-hidden="false" fontIcon="person"></mat-icon>
           Usuarios</a></mat-list-item>
         <mat-list-item role="listitem"><a 
           routerLinkActive="active"
           routerLink="alumnos"
           ><mat-icon aria-hidden="false" fontIcon="group" class="pocicion-iconos"></mat-icon>
           Alumnos</a></mat-list-item>
-        <mat-list-item role="listitem"><a href=""><mat-icon aria-hidden="false" fontIcon="people_outline" class="pocicion-iconos"></mat-icon>
+        <mat-list-item role="listitem"><a 
+          routerLinkActive="active"
+          routerLink="maestros"
+          ><mat-icon aria-hidden="false" fontIcon="people_outline" class="pocicion-iconos"></mat-icon>
           Maestros</a></mat-list-item>
-        <mat-list-item role="listitem"><a href=""><mat-icon aria-hidden="false" fontIcon="poll" class="pocicion-iconos"></mat-icon>
+        <mat-list-item role="listitem"><a 
+          routerLinkActive="active"
+          routerLink="materias"
+          ><mat-icon aria-hidden="false" fontIcon="poll" class="pocicion-iconos"></mat-icon>
           Materias</a></mat-list-item>
       </mat-list>
     </mat-drawer>
@@ -28,7 +37,7 @@
         >
           <mat-icon>menu</mat-icon>
         </button>
-        <span>Lista de alumnos</span>
+        <span>Gestión de escuela</span>
       </mat-toolbar>
     </div>
     <router-outlet />

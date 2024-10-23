@@ -13,6 +13,8 @@ export class AlumnosComponent {
   displayedColumns: string[] = ['id', 'nombre', 'edad', 'genero', 'creditos', 'fecha', 'acciones'];
   dataSource: Alumno[] = [];
   
+  estaCargando = false;
+
   constructor(
     private matDialog: MatDialog,
     private alumnosServicio: AlumnoService
@@ -23,58 +25,70 @@ export class AlumnosComponent {
   }
 
   cargarAlumnos(): void{
+    this.estaCargando = true;
     this.alumnosServicio.obtenerAlumnos().subscribe({
       next: (alumnos) => {
         this.dataSource = alumnos;
       },
       error: (error) => {
         console.error(error);
+        this.estaCargando = false;
       },
       complete: () => {
         console.log("Alumnos cargados");
+        this.estaCargando = false;
       }
     })
   }
 
   agregarAlumno(resultado: Alumno):void{
+    this.estaCargando = true;
     this.alumnosServicio.agregarAlumno(resultado).subscribe({
       next: (alumnos) => {
         this.dataSource = alumnos;
       },
       error: (error) => {
         console.error(error);
+        this.estaCargando = false;
       },
       complete: () => {
         console.log("Alumno agregado");
+        this.estaCargando = false;
       }
     })
   }
 
   actualizarAlumno(id: number, alumnoActualizado: Alumno): void{
+    this.estaCargando = true;
     this.alumnosServicio.actualizarAlumno(id, alumnoActualizado).subscribe({
       next: (alumnos) => {
         this.dataSource = alumnos;
       },
       error: (error) => {
         console.error(error);
+        this.estaCargando = false;
       },
       complete: () => {
         console.log("Alumno actualizado");
+        this.estaCargando = false;
       }
     })
   }
   
   borrarAlumno(id: number) {
     if (confirm('Esta seguro?')) {
+      this.estaCargando = true;
       this.alumnosServicio.borrarAlumno(id).subscribe({
         next: (alumnos) => {
           this.dataSource = alumnos;
         },
         error: (error) => {
           console.error(error);
+          this.estaCargando = false;
         },
         complete: () => {
           console.log("Alumno borrado");
+          this.estaCargando = false;
         }
       })
     }

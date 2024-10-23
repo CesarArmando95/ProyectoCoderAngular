@@ -1,0 +1,42 @@
+<h1 mat-dialog-title>
+    {{ data?.editarUsuario ? "Editando" : "Creando" }} usuario
+  </h1>
+  
+  <div mat-dialog-content>
+    <form [formGroup]="usuarioFormulario">
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Correo</mat-label>
+            <input formControlName="correo" matInput type="text" />
+            <mat-error>
+              @if(usuarioFormulario.get('correo')?.hasError('required')) { Este campo es
+              requerido }
+              @else if(usuarioFormulario.get('correo')?.hasError('maxlength')){
+                El correo no puede tener más de 30 caracteres
+              }
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Contraseña</mat-label>
+            <input formControlName="contrasena" matInput type="text" />
+            <mat-error>
+              @if(usuarioFormulario.get('contrasena')?.hasError('required')) { Este campo es
+              requerido }
+              @else if(usuarioFormulario.get('contrasena')?.hasError('maxlength')){
+                La contraseña no puede tener más de 30 caracteres
+              }
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <div mat-dialog-actions>
+    <button mat-dialog-close mat-button>Cancelar</button>
+    <button (click)="onSave()" mat-button>Guardar</button>
+  </div>
+

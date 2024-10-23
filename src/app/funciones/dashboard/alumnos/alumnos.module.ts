@@ -5,7 +5,7 @@ import { AlumnosRoutingModule } from './alumnos-routing.module';
 import { AlumnosComponent } from './alumnos.component';
 import { AlumnosDialogComponent } from './alumnos-dialog/alumnos-dialog.component';
 
-import { CorpatidasModule } from '../../../compartidas/compartidas.module';
+import { CompatidasModule } from '../../../compartidas/compartidas.module';
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import { CorpatidasModule } from '../../../compartidas/compartidas.module';
   imports: [
     CommonModule,
     AlumnosRoutingModule,
-    CorpatidasModule
+    CompatidasModule
   ],
   exports: [AlumnosComponent],
 })

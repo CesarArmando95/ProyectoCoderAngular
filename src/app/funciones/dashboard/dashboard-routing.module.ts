@@ -8,6 +8,21 @@ const routes: Routes = [
       import('./alumnos/alumnos.module').then((m) => m.AlumnosModule)
   },
   {
+    path: 'usuarios',
+    loadChildren: () =>
+      import('./usuarios/usuarios.module').then((m) => m.UsuariosModule)
+  },
+  {
+    path: 'maestros',
+    loadChildren:() =>
+        import('./maestros/maestros.module').then((m) => m.MaestrosModule)
+  },
+  {
+    path: 'materias',
+    loadChildren:() =>
+      import('./materias/materias.module').then((m) => m.MateriasModule)  
+  },
+  {
     path: '**',
     redirectTo: 'alumnos'
   }

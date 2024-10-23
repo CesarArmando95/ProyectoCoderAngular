@@ -36,7 +36,7 @@ export class AlumnoService {
                 observer.next(ALUMNOS);
                 //observer.error('Error al cargar los alumnos');
                 observer.complete();              
-            })
+            }, 1000)
         })
     }
 
@@ -47,7 +47,7 @@ export class AlumnoService {
                 observer.next(ALUMNOS);               
                 //observer.error('Error al agregar alumno');
                 observer.complete();
-            })
+            }, 1000)
         })
     }
 
@@ -58,7 +58,7 @@ export class AlumnoService {
                 observer.next(ALUMNOS);               
                 //observer.error('Error al borrar alumno');
                 observer.complete();
-            })
+            }, 1000)
         })
     }
 
@@ -72,7 +72,7 @@ export class AlumnoService {
                 observer.next(ALUMNOS);
                 //observer.error('Error al actualizar el alumnos');
                 observer.complete();              
-            })
+            }, 1000)
         })    
     }
 }

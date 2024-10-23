@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { NombreCompletoPipe } from './pipes/nombre-completo.pipe';
 import { AumentoTamanoTextoDirective } from './directivas/aumento-tamano-texto.directive';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @NgModule({
   declarations: [NombreCompletoPipe, AumentoTamanoTextoDirective],
   imports: [CommonModule],
@@ -29,6 +30,7 @@ import { AumentoTamanoTextoDirective } from './directivas/aumento-tamano-texto.d
     MatTableModule,
     NombreCompletoPipe,
     AumentoTamanoTextoDirective,
+    MatProgressSpinnerModule
   ],
 })
-export class CorpatidasModule {}
+export class CompatidasModule {}

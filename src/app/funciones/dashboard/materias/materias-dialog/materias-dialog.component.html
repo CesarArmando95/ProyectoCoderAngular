@@ -1,0 +1,41 @@
+<h1 mat-dialog-title>
+    {{ data?.editarMateria ? "Editando" : "Creando" }} materia
+  </h1>
+  
+  <div mat-dialog-content>
+    <form [formGroup]="materiaFormulario">
+      <div class="row">
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Nombre</mat-label>
+            <input formControlName="nombre" matInput type="text" />
+            <mat-error>
+              @if(materiaFormulario.get('nombre')?.hasError('required')) { Este campo es
+              requerido }
+              @else if(materiaFormulario.get('nombre')?.hasError('maxlength')){
+                El nombre no puede tener más de 30 caracteres
+              }
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Créditos</mat-label>
+            <input formControlName="creditos" matInput type="number" />
+            <mat-error>
+              @if(materiaFormulario.get('creditos')?.hasError('required')) { Este campo es
+              requerido }
+              @else if (materiaFormulario.get('creditos')?.hasError('creditosInvalidos')) {
+                Los créditos deben estar entre 25 a 100
+              }
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </form>
+  </div>
+  
+  <div mat-dialog-actions>
+    <button mat-dialog-close mat-button>Cancelar</button>
+    <button (click)="onSave()" mat-button>Guardar</button>
+  </div>

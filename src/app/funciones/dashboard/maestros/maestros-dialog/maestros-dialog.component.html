@@ -1,18 +1,18 @@
 <h1 mat-dialog-title>
-    {{ data?.editarAlumno ? "Editando" : "Creando" }} alumno
+    {{ data?.editarMaestro ? "Editando" : "Creando" }} maestro
   </h1>
   
   <div mat-dialog-content>
-    <form [formGroup]="alumnoFormulario">
+    <form [formGroup]="maestroFormulario">
       <div class="row">
         <div class="col-6">
           <mat-form-field class="example-form-field w-100">
             <mat-label>Nombre</mat-label>
             <input formControlName="nombre" matInput type="text" />
             <mat-error>
-              @if(alumnoFormulario.get('nombre')?.hasError('required')) { Este campo es
+              @if(maestroFormulario.get('nombre')?.hasError('required')) { Este campo es
               requerido }
-              @else if(alumnoFormulario.get('nombre')?.hasError('maxlength')){
+              @else if(maestroFormulario.get('nombre')?.hasError('maxlength')){
                 El nombre no puede tener más de 30 caracteres
               }
             </mat-error>
@@ -23,9 +23,9 @@
             <mat-label>Apellido</mat-label>
             <input formControlName="apellido" matInput type="text" />
             <mat-error>
-              @if(alumnoFormulario.get('apellido')?.hasError('required')) { Este campo es
+              @if(maestroFormulario.get('apellido')?.hasError('required')) { Este campo es
               requerido }
-              @else if(alumnoFormulario.get('apellido')?.hasError('maxlength')){
+              @else if(maestroFormulario.get('apellido')?.hasError('maxlength')){
                 El apellido no puede tener más de 30 caracteres
               }
             </mat-error>
@@ -36,9 +36,9 @@
             <mat-label>Edad</mat-label>
             <input formControlName="edad" matInput type="number" />
             <mat-error>
-              @if(alumnoFormulario.get('edad')?.hasError('required')) { Este campo es
+              @if(maestroFormulario.get('edad')?.hasError('required')) { Este campo es
               requerido }
-              @else if(alumnoFormulario.get('edad')?.hasError('edadInvalida')){La edad 
+              @else if(maestroFormulario.get('edad')?.hasError('edadInvalida')){La edad 
                 debe estar entre 18 y 90 años
               }
             </mat-error>
@@ -51,7 +51,7 @@
                 <option value="Hombre">Hombre</option>
                 <option value="Mujer">Mujer</option>
               </select>
-              @if (alumnoFormulario.get('genero')?.hasError('required')) {
+              @if (maestroFormulario.get('genero')?.hasError('required')) {
                 <mat-error>Este campo es
                   requerido</mat-error>
               }
@@ -59,14 +59,11 @@
         </div>
         <div class="col-4">
           <mat-form-field class="example-form-field w-100">
-            <mat-label>Créditos</mat-label>
-            <input formControlName="creditos" matInput type="number" />
+            <mat-label>Materia</mat-label>
+            <input formControlName="materia" matInput type="text" />
             <mat-error>
-              @if(alumnoFormulario.get('creditos')?.hasError('required')) { Este campo es
+              @if(maestroFormulario.get('materia')?.hasError('required')) { Este campo es
               requerido }
-              @else if (alumnoFormulario.get('creditos')?.hasError('creditosInvalidos')) {
-                Los créditos deben estar entre 0 a 2000
-              }
             </mat-error>
           </mat-form-field>
         </div>
