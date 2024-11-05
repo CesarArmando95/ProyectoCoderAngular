@@ -42,60 +42,60 @@ export class MateriasComponent {
   }
 
   agregarMateria(resultado: Materia):void{
-    this.estaCargando = true;
+    let cargarMaterias:boolean = false;
     this.materiasServicio.agregarMateria(resultado).subscribe({
       next: (materias) => {
-        this.dataSource = materias;
+        cargarMaterias = materias;
       },
       error: (error) => {
         console.error(error);
-        this.estaCargando = false;
       },
       complete: () => {
         console.log("Materia agregado");
-        this.estaCargando = false;
+        if(cargarMaterias)
+          this.cargarMaterias();
       }
     })
   }
 
   actualizarMateria(id: number, materiaActualizado: Materia): void{
-    this.estaCargando = true;
+    let cargarMaterias:boolean = false;
     this.materiasServicio.actualizarMateria(id, materiaActualizado).subscribe({
       next: (materias) => {
-        this.dataSource = materias;
+        cargarMaterias = materias;
       },
       error: (error) => {
         console.error(error);
-        this.estaCargando = false;
       },
       complete: () => {
         console.log("Materia actualizado");
-        this.estaCargando = false;
+        if(cargarMaterias)
+          this.cargarMaterias();
       }
     })
   }
   
   borrarMateria(id: number) {
     if (confirm('Esta seguro?')) {
-      this.estaCargando = true;
+      let cargarMaterias:boolean = false;
       this.materiasServicio.borrarMateria(id).subscribe({
         next: (materias) => {
-          this.dataSource = materias;
+          cargarMaterias = materias;
         },
         error: (error) => {
           console.error(error);
-          this.estaCargando = false;
         },
         complete: () => {
           console.log("Materia borrado");
-          this.estaCargando = false;
+          if(cargarMaterias)
+            this.cargarMaterias();
         }
       })
     }
   }
 
   openModal(editarMateria?: Materia): void {
-    const tamano = obtenerMaximoId(this.dataSource);
+    const tamano = (this.dataSource.length + 1);
     this.matDialog
       .open(MateriasDialogComponent, {
         data: {
@@ -117,16 +117,4 @@ export class MateriasComponent {
       });
   }
 
-}
-
-
-//función para evitar repitir id cuando se crea un nuevo materia
-function obtenerMaximoId(materias: Materia[]): number{
-  if (materias.length === 0) {
-    return 0;
-  }
-
-  return materias.reduce((max, materia) => {
-    return materia.id > max ? materia.id : max;
-  }, materias[0].id); // Inicializa el máximo con el primer id
 }

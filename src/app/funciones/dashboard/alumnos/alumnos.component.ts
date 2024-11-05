@@ -42,60 +42,60 @@ export class AlumnosComponent {
   }
 
   agregarAlumno(resultado: Alumno):void{
-    this.estaCargando = true;
+    let cargarAlumnos:boolean = false;
     this.alumnosServicio.agregarAlumno(resultado).subscribe({
       next: (alumnos) => {
-        this.dataSource = alumnos;
+        cargarAlumnos = alumnos;
       },
       error: (error) => {
         console.error(error);
-        this.estaCargando = false;
       },
       complete: () => {
         console.log("Alumno agregado");
-        this.estaCargando = false;
+        if(cargarAlumnos)
+          this.cargarAlumnos();
       }
     })
   }
 
   actualizarAlumno(id: number, alumnoActualizado: Alumno): void{
-    this.estaCargando = true;
+    let cargarAlumnos:boolean = false;
     this.alumnosServicio.actualizarAlumno(id, alumnoActualizado).subscribe({
       next: (alumnos) => {
-        this.dataSource = alumnos;
+        cargarAlumnos= alumnos;
       },
       error: (error) => {
         console.error(error);
-        this.estaCargando = false;
       },
       complete: () => {
         console.log("Alumno actualizado");
-        this.estaCargando = false;
+        if(cargarAlumnos)
+          this.cargarAlumnos();
       }
     })
   }
   
   borrarAlumno(id: number) {
     if (confirm('Esta seguro?')) {
-      this.estaCargando = true;
+      let cargarAlumnos:boolean = false;
       this.alumnosServicio.borrarAlumno(id).subscribe({
         next: (alumnos) => {
-          this.dataSource = alumnos;
+          cargarAlumnos = alumnos;
         },
         error: (error) => {
           console.error(error);
-          this.estaCargando = false;
         },
         complete: () => {
           console.log("Alumno borrado");
-          this.estaCargando = false;
+          if(cargarAlumnos)
+            this.cargarAlumnos();
         }
       })
     }
   }
 
   openModal(editarAlumno?: Alumno): void {
-    const tamano = obtenerMaximoId(this.dataSource);
+    const tamano = (this.dataSource.length + 1);
     this.matDialog
       .open(AlumnosDialogComponent, {
         data: {
@@ -120,16 +120,4 @@ export class AlumnosComponent {
       });
   }
 
-}
-
-
-//función para evitar repitir id cuando se crea un nuevo alumno
-function obtenerMaximoId(alumnos: Alumno[]): number{
-  if (alumnos.length === 0) {
-    return 0;
-  }
-
-  return alumnos.reduce((max, alumno) => {
-    return alumno.id > max ? alumno.id : max;
-  }, alumnos[0].id); // Inicializa el máximo con el primer id
 }

@@ -1,0 +1,79 @@
+{
+  "usuarios": [
+    {
+      "id": "1",
+      "correo": "manuel@mail.com",
+      "fechaCreacion": "2024-10-24T00:14:33.140Z",
+      "contrasena": "123456",
+      "token": "ndsHSBnsdjkasJs354MSjsnmvcs332SJnxjS"
+    },
+    {
+      "id": "2",
+      "correo": "lorena@mail.com",
+      "fechaCreacion": "2024-10-24T00:14:33.140Z",
+      "contrasena": "789456",
+      "token": "ndsHSBnsdjkasJs354MSjsnmvcs332SJnxjS"
+    },
+    {
+      "correo": "Juan@gmail.com",
+      "contrasena": "456789",
+      "id": "3",
+      "fechaCreacion": "2024-11-04T23:21:12.711Z",
+      "token": "9ZkwDonoCaRTqZLPhCi5"
+    }
+  ],
+  "alumnos": [
+    {
+      "id": "1",
+      "nombre": "Juan",
+      "apellido": "Perez",
+      "edad": 20,
+      "genero": "Hombre",
+      "creditos": 120,
+      "fechaCreacion": "2024-11-04T23:21:12.711Z"
+    },
+    {
+      "id": "2",
+      "nombre": "Olga",
+      "apellido": "Mari",
+      "edad": 22,
+      "genero": "Mujer",
+      "creditos": 150,
+      "fechaCreacion": "2024-11-04T23:21:12.711Z"
+    }
+  ],
+  "maestros": [
+    {
+      "id": "1",
+      "nombre": "Juan",
+      "apellido": "Perez",
+      "edad": 40,
+      "genero": "Hombre",
+      "materia": "Calculo",
+      "fechaCreacion": "2024-11-04T23:21:12.711Z"
+    },
+    {
+      "id": "2",
+      "nombre": "Lorena",
+      "apellido": "Parra",
+      "edad": 35,
+      "genero": "Mujer",
+      "materia": "Redes",
+      "fechaCreacion": "2024-11-04T23:21:12.711Z"
+    }
+  ],
+  "materias": [
+    {
+      "id": "1",
+      "nombre": "Calculo",
+      "creditos": 75,
+      "fechaCreacion": "2024-11-04T23:21:12.711Z"
+    },
+    {
+      "id": "2",
+      "nombre": "Redes",
+      "creditos": 75,
+      "fechaCreacion": "2024-11-04T23:21:12.711Z"
+    }
+  ]
+}

@@ -43,60 +43,60 @@ export class UsuariosComponent {
   }
 
   agregarUsuario(resultado: Usuario):void{
-    this.estaCargando = true;
+    let cargarUsuarios:boolean = false;
     this.usuariosServicio.agregarUsuario(resultado).subscribe({
       next: (usuarios) => {
-        this.dataSource = usuarios;
+        cargarUsuarios= usuarios;
       },
       error: (error) => {
         console.error(error);
-        this.estaCargando = false;
       },
       complete: () => {
         console.log("Usuario agregado");
-        this.estaCargando = false;
+        if(cargarUsuarios)
+          this.cargarUsuarios();
       }
     })
   }
 
   actualizarUsuario(id: number, UsuarioActualizado: Usuario): void{
-    this.estaCargando = true;
+    let cargarUsuarios:boolean = false;
     this.usuariosServicio.actualizarUsuario(id, UsuarioActualizado).subscribe({
       next: (usuarios) => {
-        this.dataSource = usuarios;
+        cargarUsuarios= usuarios;
       },
       error: (error) => {
         console.error(error);
-        this.estaCargando = false;
       },
       complete: () => {
         console.log("Usuario actualizado");
-        this.estaCargando = false;
+        if(cargarUsuarios)
+          this.cargarUsuarios();
       }
     })
   }
   
   borrarUsuario(id: number) {
     if (confirm('Esta seguro?')) {
-      this.estaCargando = true;
+      let cargarUsuarios:boolean = false;
       this.usuariosServicio.borrarUsuario(id).subscribe({
         next: (usuarios) => {
-          this.dataSource = usuarios;
+          cargarUsuarios= usuarios;
         },
         error: (error) => {
           console.error(error);
-          this.estaCargando = false;
         },
         complete: () => {
           console.log("Usuario borrado");
-          this.estaCargando = false;
+          if(cargarUsuarios)
+            this.cargarUsuarios();
         }
       })
     }
   }
 
   openModal(editarUsuario?: Usuario): void {
-    const tamano = obtenerMaximoId(this.dataSource);
+    const tamano = (this.dataSource.length + 1);
     this.matDialog
       .open(UsuariosDialogComponent, {
         data: {
@@ -117,16 +117,5 @@ export class UsuariosComponent {
         },
       });
   }
-}
-
-//función para evitar repitir id cuando se crea un nuevo usuario
-function obtenerMaximoId(usuarios: Usuario[]): number{
-  if (usuarios.length === 0) {
-    return 0;
-  }
-
-  return usuarios.reduce((max, usuario) => {
-    return usuario.id > max ? usuario.id : max;
-  }, usuarios[0].id); // Inicializa el máximo con el primer id
 }
 

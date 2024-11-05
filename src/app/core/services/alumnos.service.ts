@@ -1,78 +1,59 @@
 import { Injectable } from "@angular/core";
 import { Alumno } from '../../modelos/alumno-model'; 
-import { Observable } from 'rxjs';
-
-let ALUMNOS: Alumno[] = [
-    {
-      id: 1,
-      nombre: 'Juan',
-      apellido: 'Perez',
-      edad: 20,
-      genero: 'Hombre',
-      creditos: 120,
-      fechaCreacion: new Date()
-    },
-    {
-      id: 2,
-      nombre: 'Olga',
-      apellido: 'Mari',
-      edad: 22,
-      genero: 'Mujer',
-      creditos: 150,
-      fechaCreacion: new Date()
-    }
-];
+import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { generadorToken } from "../../compartidas/herramientas/generadorToken";
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
 })
 
 export class AlumnoService {
-    constructor() {}
+    private baseURL = environment.apiBaseURL;
+    constructor(private httpClient: HttpClient) {}
 
     obtenerAlumnos(): Observable<Alumno[]>{
-        return new Observable((observer) => {
-            setInterval(() => {
-                observer.next(ALUMNOS);
-                //observer.error('Error al cargar los alumnos');
-                observer.complete();              
-            }, 1000)
-        })
+        return this.httpClient.get<Alumno[]>(`${this.baseURL}/alumnos`);
     }
 
-    agregarAlumno(resultado: Alumno): Observable<Alumno[]>{
-        ALUMNOS = [...ALUMNOS, resultado];
-        return new Observable((observer) => {
-            setInterval(() => {
-                observer.next(ALUMNOS);               
-                //observer.error('Error al agregar alumno');
-                observer.complete();
-            }, 1000)
-        })
+    agregarAlumno(resultado: Alumno): Observable<boolean>{
+        return this.httpClient.post(`${this.baseURL}/alumnos` ,{
+            ...resultado,
+            id: String(resultado.id),
+            fechaCreacion: new Date().toISOString(),
+        }).pipe(
+            map(() => true),
+            catchError(error => {
+                console.error('Error al crear alumno', error);
+                return of(false);
+              })
+        )
     }
 
-    borrarAlumno(id:number):Observable<Alumno[]>{
-        ALUMNOS = ALUMNOS.filter((alumno) => alumno.id != id);
-        return new Observable((observer) => {
-            setInterval(() => {
-                observer.next(ALUMNOS);               
-                //observer.error('Error al borrar alumno');
-                observer.complete();
-            }, 1000)
-        })
+    borrarAlumno(id:number):Observable<boolean>{
+        return this.httpClient.delete(`${this.baseURL}/alumnos/${id}`)
+        .pipe(
+            map(() => true),
+            catchError(error => {
+                console.error('Error al borrar alumno', error);
+                return of(false);
+              })
+        )
     }
 
-    actualizarAlumno(id: number, alumnoActualizado: Partial<Alumno>):Observable<Alumno[]> {
-        ALUMNOS = ALUMNOS.map((alumno) => 
-        alumno.id === id ? {...alumno, ...alumnoActualizado} : alumno
-        );
-
-        return new Observable((observer) => {
-            setInterval(() => {
-                observer.next(ALUMNOS);
-                //observer.error('Error al actualizar el alumnos');
-                observer.complete();              
-            }, 1000)
-        })    
+    actualizarAlumno(id: number, alumnoActualizado: Partial<Alumno>):Observable<boolean> {
+        return this.httpClient.put(`${this.baseURL}/alumnos/${id}` ,{
+            ...alumnoActualizado,
+            fechaCreacion: new Date().toISOString(),
+            token: generadorToken(20),
+        }).pipe(
+            map(() => true),
+            catchError(error => {
+                console.error('Error al actualizar alumno', error);
+                return of(false);
+              })
+        )    
     }
 }

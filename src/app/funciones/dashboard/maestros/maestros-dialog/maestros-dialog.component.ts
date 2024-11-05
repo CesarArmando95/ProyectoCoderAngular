@@ -45,7 +45,7 @@ export class MaestrosDialogComponent {
         ...this.maestroFormulario.value,
         id: this.esEditado
           ? this.data!.editarMaestro!.id
-          : (this.tamano + 1),
+          : (this.tamano),
         fechaCreacion: this.esEditado
           ? this.data!.editarMaestro!.fechaCreacion
           : new Date(),

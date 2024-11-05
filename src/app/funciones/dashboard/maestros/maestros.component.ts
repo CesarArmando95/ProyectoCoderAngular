@@ -42,60 +42,60 @@ export class MaestrosComponent {
   }
 
   agregarMaestro(resultado: Maestro):void{
-    this.estaCargando = true;
+    let cargarMaestros:boolean = false;
     this.maestrosServicio.agregarMaestro(resultado).subscribe({
       next: (maestros) => {
-        this.dataSource = maestros;
+        cargarMaestros= maestros;
       },
       error: (error) => {
         console.error(error);
-        this.estaCargando = false;
       },
       complete: () => {
         console.log("Maestro agregado");
-        this.estaCargando = false;
+        if(cargarMaestros)
+          this.cargarMaestros();
       }
     })
   }
 
   actualizarMaestro(id: number, maestroActualizado: Maestro): void{
-    this.estaCargando = true;
+    let cargarMaestros:boolean = false;
     this.maestrosServicio.actualizarMaestro(id, maestroActualizado).subscribe({
       next: (maestros) => {
-        this.dataSource = maestros;
+        cargarMaestros= maestros;
       },
       error: (error) => {
         console.error(error);
-        this.estaCargando = false;
       },
       complete: () => {
         console.log("Maestro actualizado");
-        this.estaCargando = false;
+        if(cargarMaestros)
+          this.cargarMaestros();
       }
     })
   }
   
   borrarMaestro(id: number) {
     if (confirm('Esta seguro?')) {
-      this.estaCargando = true;
+      let cargarMaestros:boolean = false;
       this.maestrosServicio.borrarMaestro(id).subscribe({
         next: (maestros) => {
-          this.dataSource = maestros;
+          cargarMaestros= maestros;
         },
         error: (error) => {
           console.error(error);
-          this.estaCargando = false;
         },
         complete: () => {
           console.log("Maestro borrado");
-          this.estaCargando = false;
+          if(cargarMaestros)
+            this.cargarMaestros();
         }
       })
     }
   }
 
   openModal(editarMaestro?: Maestro): void {
-    const tamano = obtenerMaximoId(this.dataSource);
+    const tamano = (this.dataSource.length + 1);
     this.matDialog
       .open(MaestrosDialogComponent, {
         data: {
@@ -118,16 +118,3 @@ export class MaestrosComponent {
   }
 
 }
-
-
-//función para evitar repitir id cuando se crea un nuevo maestro
-function obtenerMaximoId(maestros: Maestro[]): number{
-  if (maestros.length === 0) {
-    return 0;
-  }
-
-  return maestros.reduce((max, maestro) => {
-    return maestro.id > max ? maestro.id : max;
-  }, maestros[0].id); // Inicializa el máximo con el primer id
-}
-

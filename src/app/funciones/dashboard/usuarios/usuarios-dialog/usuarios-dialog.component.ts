@@ -39,7 +39,7 @@ export class UsuariosDialogComponent {
         ...this.usuarioFormulario.value,
         id: this.esEditado
           ? this.data!.editarUsuario!.id
-          : (this.tamano + 1),
+          : (this.tamano),
         fechaCreacion: this.esEditado
           ? this.data!.editarUsuario!.fechaCreacion
           : new Date(),

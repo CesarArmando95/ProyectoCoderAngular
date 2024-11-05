@@ -49,7 +49,7 @@ export class AlumnosDialogComponent {
         ...this.alumnoFormulario.value,
         id: this.esEditado
           ? this.data!.editarAlumno!.id
-          : (this.tamano + 1),
+          : (this.tamano),
         fechaCreacion: this.esEditado
           ? this.data!.editarAlumno!.fechaCreacion
           : new Date(),

@@ -1,78 +1,60 @@
 import { Injectable } from "@angular/core";
 import { Usuario } from '../../modelos/usuario-model'; 
-import { Observable } from 'rxjs';
-
-let USUARIOS: Usuario [] =[
-    {
-        id: 1,
-        correo: "jose@lua.com",
-        fechaCreacion: new Date(),
-        contrasena: "123456"
-    },
-    {
-        id: 2,
-        correo: "maria@lua.com",
-        fechaCreacion: new Date(),
-        contrasena: "654321"
-    },
-    {
-        id: 3,
-        correo: "karla@lua.com",
-        fechaCreacion: new Date(),
-        contrasena: "963852"
-    }
-];
+import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { generadorToken } from "../../compartidas/herramientas/generadorToken";
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
 })
 
 export class UsuariosService{
-    constructor(){}
+    private baseURL = environment.apiBaseURL;
+    constructor(private httpClient: HttpClient){}
 
     obtenerUsuarios(): Observable<Usuario[]>{
-        return new Observable((observer) => {
-            setInterval(() => {
-                observer.next(USUARIOS);
-                //observer.error('Error al cargar los USUARIOS');
-                observer.complete();              
-            }, 1000)
-        })
+        return this.httpClient.get<Usuario[]>(`${this.baseURL}/usuarios`);
     }
 
-    agregarUsuario(resultado: Usuario): Observable<Usuario[]>{
-        USUARIOS = [...USUARIOS, resultado];
-        return new Observable((observer) => {
-            setInterval(() => {
-                observer.next(USUARIOS);               
-                //observer.error('Error al agregar Usuario');
-                observer.complete();
-            }, 1000)
-        })
+    agregarUsuario(resultado: Usuario): Observable<boolean>{
+        return this.httpClient.post(`${this.baseURL}/usuarios` ,{
+            ...resultado,
+            id: String(resultado.id),
+            fechaCreacion: new Date().toISOString(),
+            token: generadorToken(20),
+        }).pipe(
+            map(() => true),
+            catchError(error => {
+                console.error('Error al crear usuario', error);
+                return of(false);
+              })
+        )
     }
 
-    borrarUsuario(id:number):Observable<Usuario[]>{
-        USUARIOS = USUARIOS.filter((Usuario) => Usuario.id != id);
-        return new Observable((observer) => {
-            setInterval(() => {
-                observer.next(USUARIOS);               
-                //observer.error('Error al borrar Usuario');
-                observer.complete();
-            }, 1000)
-        })
+    borrarUsuario(id:number):Observable<boolean>{
+        return this.httpClient.delete(`${this.baseURL}/usuarios/${id}`)
+        .pipe(
+            map(() => true),
+            catchError(error => {
+                console.error('Error al borrar usuario', error);
+                return of(false);
+              })
+        )
     }
 
-    actualizarUsuario(id: number, UsuarioActualizado: Partial<Usuario>):Observable<Usuario[]> {
-        USUARIOS = USUARIOS.map((Usuario) => 
-        Usuario.id === id ? {...Usuario, ...UsuarioActualizado} : Usuario
-        );
-
-        return new Observable((observer) => {
-            setInterval(() => {
-                observer.next(USUARIOS);
-                //observer.error('Error al actualizar el USUARIOS');
-                observer.complete();              
-            }, 1000)
-        })    
+    actualizarUsuario(id: number, UsuarioActualizado: Partial<Usuario>):Observable<boolean> {
+        return this.httpClient.put(`${this.baseURL}/usuarios/${id}` ,{
+            ...UsuarioActualizado,
+            fechaCreacion: new Date().toISOString(),
+            token: generadorToken(20),
+        }).pipe(
+            map(() => true),
+            catchError(error => {
+                console.error('Error al actualizar usuario', error);
+                return of(false);
+              })
+        )   
     }
 }
