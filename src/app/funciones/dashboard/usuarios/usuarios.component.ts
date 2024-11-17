@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Usuario } from '../../../modelos/usuario-model';
 import { UsuariosDialogComponent } from './usuarios-dialog/usuarios-dialog.component';
-import { UsuariosService } from '../../../core/services/usuarios.service';
+import { Store } from '@ngrx/store';
+import { UsuariosActions } from './store/usuarios.actions';
+import { selectUsuarios, selectErrorUsuarios, selectCargandoUsuarios } from './store/usuarios.selectors';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -12,91 +15,39 @@ import { UsuariosService } from '../../../core/services/usuarios.service';
 })
 export class UsuariosComponent {
   displayedColumns: string[] = ['id', 'correo', 'fecha', 'contrasena', 'acciones'];
-  dataSource: Usuario[] = [];
-
-  estaCargando = false;
+  dataSource$: Observable<Usuario[]>;
+  errorCarga$: Observable<Error | null>;
+  estaCargando$: Observable<boolean>;
 
   constructor(
     private matDialog: MatDialog,
-    private usuariosServicio: UsuariosService
-  ){}
-
-  ngOnInit(): void {
-    this.cargarUsuarios();
+    private store: Store
+  ){
+    this.dataSource$ = this.store.select(selectUsuarios);
+    this.errorCarga$= this.store.select(selectErrorUsuarios);
+    this.estaCargando$ = this.store.select(selectCargandoUsuarios);
   }
 
-  cargarUsuarios(): void {
-    this.estaCargando = true;
-    this.usuariosServicio.obtenerUsuarios().subscribe({
-      next: (usuarios) => {
-        this.dataSource = usuarios;
-      },
-      error: (error) => {
-        console.error(error);
-        this.estaCargando = false;
-      },
-      complete: () => {
-        console.log("Usuarios cargados");
-        this.estaCargando = false;
-      }
-    })
+  ngOnInit(): void {
+    this.store.dispatch(UsuariosActions.cargarUsuarios());
   }
 
   agregarUsuario(resultado: Usuario):void{
-    let cargarUsuarios:boolean = false;
-    this.usuariosServicio.agregarUsuario(resultado).subscribe({
-      next: (usuarios) => {
-        cargarUsuarios= usuarios;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        console.log("Usuario agregado");
-        if(cargarUsuarios)
-          this.cargarUsuarios();
-      }
-    })
+    this.store.dispatch(UsuariosActions.crearUsuario({usuarioNuevo: resultado}));
   }
 
-  actualizarUsuario(id: number, UsuarioActualizado: Usuario): void{
-    let cargarUsuarios:boolean = false;
-    this.usuariosServicio.actualizarUsuario(id, UsuarioActualizado).subscribe({
-      next: (usuarios) => {
-        cargarUsuarios= usuarios;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        console.log("Usuario actualizado");
-        if(cargarUsuarios)
-          this.cargarUsuarios();
-      }
-    })
+  actualizarUsuario(id: number, usuarioActualizado: Usuario): void{
+    this.store.dispatch(UsuariosActions.actualizarUsuario({id:id, usuarioActualizado: usuarioActualizado}))
   }
   
   borrarUsuario(id: number) {
-    if (confirm('Esta seguro?')) {
-      let cargarUsuarios:boolean = false;
-      this.usuariosServicio.borrarUsuario(id).subscribe({
-        next: (usuarios) => {
-          cargarUsuarios= usuarios;
-        },
-        error: (error) => {
-          console.error(error);
-        },
-        complete: () => {
-          console.log("Usuario borrado");
-          if(cargarUsuarios)
-            this.cargarUsuarios();
-        }
-      })
-    }
+    if(confirm('Esta seguro de eliminar este usuario')){
+      this.store.dispatch(UsuariosActions.borrarUsuario({id:id}))
+    } 
   }
 
   openModal(editarUsuario?: Usuario): void {
-    const tamano = (this.dataSource.length + 1);
+    const tamano = Math.floor(Math.random() * 1000);
     this.matDialog
       .open(UsuariosDialogComponent, {
         data: {

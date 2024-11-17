@@ -40,6 +40,16 @@
       "genero": "Mujer",
       "creditos": 150,
       "fechaCreacion": "2024-11-04T23:21:12.711Z"
+    },
+    {
+      "nombre": "poncho",
+      "apellido": "matias",
+      "edad": 58,
+      "genero": "Hombre",
+      "creditos": 100,
+      "id": "850",
+      "fechaCreacion": "2024-11-17T06:05:38.648Z",
+      "token": "KVPSovzNw0Vt7728rJzH"
     }
   ],
   "maestros": [

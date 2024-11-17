@@ -6,6 +6,10 @@ import { MateriasComponent } from './materias.component';
 import { MateriasDialogComponent } from './materias-dialog/materias-dialog.component';
 
 import { CompatidasModule } from '../../../compartidas/compartidas.module';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { MateriasEffects } from './store/materias.effects';
+import { materiasFeature } from './store/materias.reducer';
 
 @NgModule({
   declarations: [
@@ -15,7 +19,9 @@ import { CompatidasModule } from '../../../compartidas/compartidas.module';
   imports: [
     CommonModule,
     MateriasRoutingModule,
-    CompatidasModule
+    CompatidasModule,
+    StoreModule.forFeature(materiasFeature),
+    EffectsModule.forFeature([MateriasEffects])
   ]
 })
 export class MateriasModule { }

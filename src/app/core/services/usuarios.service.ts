@@ -18,43 +18,24 @@ export class UsuariosService{
         return this.httpClient.get<Usuario[]>(`${this.baseURL}/usuarios`);
     }
 
-    agregarUsuario(resultado: Usuario): Observable<boolean>{
-        return this.httpClient.post(`${this.baseURL}/usuarios` ,{
+    agregarUsuario(resultado: Usuario): Observable<Usuario>{
+        return this.httpClient.post<Usuario>(`${this.baseURL}/usuarios` ,{
             ...resultado,
             id: String(resultado.id),
             fechaCreacion: new Date().toISOString(),
             token: generadorToken(20),
-        }).pipe(
-            map(() => true),
-            catchError(error => {
-                console.error('Error al crear usuario', error);
-                return of(false);
-              })
-        )
+        })
     }
 
-    borrarUsuario(id:number):Observable<boolean>{
-        return this.httpClient.delete(`${this.baseURL}/usuarios/${id}`)
-        .pipe(
-            map(() => true),
-            catchError(error => {
-                console.error('Error al borrar usuario', error);
-                return of(false);
-              })
-        )
+    borrarUsuario(id:number):Observable<Usuario>{
+        return this.httpClient.delete<Usuario>(`${this.baseURL}/usuarios/${id}`)
     }
 
-    actualizarUsuario(id: number, UsuarioActualizado: Partial<Usuario>):Observable<boolean> {
-        return this.httpClient.put(`${this.baseURL}/usuarios/${id}` ,{
+    actualizarUsuario(id: number, UsuarioActualizado: Partial<Usuario>):Observable<Usuario> {
+        return this.httpClient.put<Usuario>(`${this.baseURL}/usuarios/${id}` ,{
             ...UsuarioActualizado,
             fechaCreacion: new Date().toISOString(),
             token: generadorToken(20),
-        }).pipe(
-            map(() => true),
-            catchError(error => {
-                console.error('Error al actualizar usuario', error);
-                return of(false);
-              })
-        )   
+        })
     }
 }

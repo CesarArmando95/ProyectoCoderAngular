@@ -6,6 +6,10 @@ import { MaestrosComponent } from './maestros.component';
 import { MaestrosDialogComponent } from './maestros-dialog/maestros-dialog.component';
 
 import { CompatidasModule } from '../../../compartidas/compartidas.module';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { MaestrosEffects } from './store/maestros.effects';
+import { maestrosFeature } from './store/maestros.reducer';
 
 
 @NgModule({
@@ -16,7 +20,9 @@ import { CompatidasModule } from '../../../compartidas/compartidas.module';
   imports: [
     CommonModule,
     MaestrosRoutingModule,
-    CompatidasModule
+    CompatidasModule,
+    StoreModule.forFeature(maestrosFeature),
+    EffectsModule.forFeature([MaestrosEffects])
   ]
 })
 export class MaestrosModule { }

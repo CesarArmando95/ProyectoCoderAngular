@@ -18,42 +18,23 @@ export class MaestrosService {
     return this.httpClient.get<Maestro[]>(`${this.baseURL}/maestros`);
 }
 
-agregarMaestro(resultado: Maestro): Observable<boolean>{
-    return this.httpClient.post(`${this.baseURL}/maestros` ,{
+agregarMaestro(resultado: Maestro): Observable<Maestro>{
+    return this.httpClient.post<Maestro>(`${this.baseURL}/maestros` ,{
         ...resultado,
         id: String(resultado.id),
         fechaCreacion: new Date().toISOString(),
-    }).pipe(
-        map(() => true),
-        catchError(error => {
-            console.error('Error al crear maestro', error);
-            return of(false);
-          })
-    )
+    })
 }
 
-borrarMaestro(id:number):Observable<boolean>{
-    return this.httpClient.delete(`${this.baseURL}/maestros/${id}`)
-        .pipe(
-            map(() => true),
-            catchError(error => {
-                console.error('Error al borrar maestro', error);
-                return of(false);
-              })
-        )
+borrarMaestro(id:number):Observable<Maestro>{
+    return this.httpClient.delete<Maestro>(`${this.baseURL}/maestros/${id}`)
 }
 
-actualizarMaestro(id: number, maestroActualizado: Partial<Maestro>):Observable<boolean> {
-    return this.httpClient.put(`${this.baseURL}/maestros/${id}` ,{
+actualizarMaestro(id: number, maestroActualizado: Partial<Maestro>):Observable<Maestro> {
+    return this.httpClient.put<Maestro>(`${this.baseURL}/maestros/${id}` ,{
         ...maestroActualizado,
         fechaCreacion: new Date().toISOString(),
         token: generadorToken(20),
-    }).pipe(
-        map(() => true),
-        catchError(error => {
-            console.error('Error al actualizar maestro', error);
-            return of(false);
-          })
-    )    
+    })   
 }
 }

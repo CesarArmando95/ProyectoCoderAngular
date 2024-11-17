@@ -6,6 +6,10 @@ import { AlumnosComponent } from './alumnos.component';
 import { AlumnosDialogComponent } from './alumnos-dialog/alumnos-dialog.component';
 
 import { CompatidasModule } from '../../../compartidas/compartidas.module';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { AlumnosEffects } from './store/alumnos.effects';
+import { alumnosFeature } from './store/alumnos.reducer';
 
 
 @NgModule({
@@ -13,7 +17,9 @@ import { CompatidasModule } from '../../../compartidas/compartidas.module';
   imports: [
     CommonModule,
     AlumnosRoutingModule,
-    CompatidasModule
+    CompatidasModule,
+    StoreModule.forFeature(alumnosFeature),
+    EffectsModule.forFeature([AlumnosEffects])
   ],
   exports: [AlumnosComponent],
 })

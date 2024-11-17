@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Alumno } from '../../../modelos/alumno-model';
 import { AlumnosDialogComponent } from './alumnos-dialog/alumnos-dialog.component';
-import { AlumnoService } from '../../../core/services/alumnos.service';
+import { Store } from '@ngrx/store';
+import { AlumnosActions } from './store/alumnos.actions';
+import { selectAlumnos, selectErrorAlumnos, selectCargandoAlumnos } from './store/alumnos.selectors';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-alumnos',
@@ -11,91 +14,39 @@ import { AlumnoService } from '../../../core/services/alumnos.service';
 })
 export class AlumnosComponent {
   displayedColumns: string[] = ['id', 'nombre', 'edad', 'genero', 'creditos', 'fecha', 'acciones'];
-  dataSource: Alumno[] = [];
-  
-  estaCargando = false;
+  dataSource$: Observable<Alumno[]>;
+  errorCarga$: Observable<Error | null>;
+  estaCargando$: Observable<boolean>;
 
   constructor(
     private matDialog: MatDialog,
-    private alumnosServicio: AlumnoService
-  ){}
-
-  ngOnInit(): void {
-    this.cargarAlumnos();
+    private store: Store
+  ){
+    this.dataSource$ = this.store.select(selectAlumnos);
+    this.errorCarga$= this.store.select(selectErrorAlumnos);
+    this.estaCargando$ = this.store.select(selectCargandoAlumnos);
   }
 
-  cargarAlumnos(): void{
-    this.estaCargando = true;
-    this.alumnosServicio.obtenerAlumnos().subscribe({
-      next: (alumnos) => {
-        this.dataSource = alumnos;
-      },
-      error: (error) => {
-        console.error(error);
-        this.estaCargando = false;
-      },
-      complete: () => {
-        console.log("Alumnos cargados");
-        this.estaCargando = false;
-      }
-    })
+  ngOnInit(): void {
+    this.store.dispatch(AlumnosActions.cargarAlumnos());
   }
 
   agregarAlumno(resultado: Alumno):void{
-    let cargarAlumnos:boolean = false;
-    this.alumnosServicio.agregarAlumno(resultado).subscribe({
-      next: (alumnos) => {
-        cargarAlumnos = alumnos;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        console.log("Alumno agregado");
-        if(cargarAlumnos)
-          this.cargarAlumnos();
-      }
-    })
+    this.store.dispatch(AlumnosActions.crearAlumno({alumnoNuevo: resultado}));
   }
 
   actualizarAlumno(id: number, alumnoActualizado: Alumno): void{
-    let cargarAlumnos:boolean = false;
-    this.alumnosServicio.actualizarAlumno(id, alumnoActualizado).subscribe({
-      next: (alumnos) => {
-        cargarAlumnos= alumnos;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        console.log("Alumno actualizado");
-        if(cargarAlumnos)
-          this.cargarAlumnos();
-      }
-    })
+    this.store.dispatch(AlumnosActions.actualizarAlumno({id:id, alumnoActualizado:alumnoActualizado}))
   }
   
   borrarAlumno(id: number) {
-    if (confirm('Esta seguro?')) {
-      let cargarAlumnos:boolean = false;
-      this.alumnosServicio.borrarAlumno(id).subscribe({
-        next: (alumnos) => {
-          cargarAlumnos = alumnos;
-        },
-        error: (error) => {
-          console.error(error);
-        },
-        complete: () => {
-          console.log("Alumno borrado");
-          if(cargarAlumnos)
-            this.cargarAlumnos();
-        }
-      })
-    }
+    if(confirm('Esta seguro de eliminar este alumno')){
+      this.store.dispatch(AlumnosActions.borrarAlumno({id:id}))
+    }   
   }
 
   openModal(editarAlumno?: Alumno): void {
-    const tamano = (this.dataSource.length + 1);
+    const tamano = Math.floor(Math.random() * 1000);
     this.matDialog
       .open(AlumnosDialogComponent, {
         data: {
@@ -108,9 +59,6 @@ export class AlumnosComponent {
         next: (resultado) => {
           if (!!resultado) {
             if (editarAlumno) {
-              //this.dataSource = this.dataSource.map((alumno) =>
-                //alumno.id === editarAlumno.id ? { ...alumno, ...resultado } : alumno
-              //);
               this.actualizarAlumno(editarAlumno.id, resultado);
             } else {
               this.agregarAlumno(resultado);

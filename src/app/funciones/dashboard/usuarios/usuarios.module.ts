@@ -6,6 +6,10 @@ import { UsuariosComponent } from './usuarios.component';
 
 import { CompatidasModule } from '../../../compartidas/compartidas.module';
 import { UsuariosDialogComponent } from './usuarios-dialog/usuarios-dialog.component';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { UsuariosEffects } from './store/usuarios.effects';
+import { usuariosFeature } from './store/usuarios.reducer';
 
 @NgModule({
   declarations: [
@@ -15,7 +19,9 @@ import { UsuariosDialogComponent } from './usuarios-dialog/usuarios-dialog.compo
   imports: [
     CommonModule,
     UsuariosRoutingModule,
-    CompatidasModule
+    CompatidasModule,
+    StoreModule.forFeature(usuariosFeature),
+    EffectsModule.forFeature([UsuariosEffects])
   ],
   exports: [UsuariosComponent]
 })

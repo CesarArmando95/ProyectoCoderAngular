@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Maestro } from '../../../modelos/maestro-model';
 import { MaestrosDialogComponent } from './maestros-dialog/maestros-dialog.component';
-import { MaestrosService } from '../../../core/services/maestros.service';
+import { Store } from '@ngrx/store';
+import { MaestrosActions } from './store/maestros.actions';
+import { selectMaestros, selectErrorMaestros, selectCargandoMaestros } from './store/maestros.selectors';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-maestros',
@@ -11,91 +14,41 @@ import { MaestrosService } from '../../../core/services/maestros.service';
 })
 export class MaestrosComponent {
   displayedColumns: string[] = ['id', 'nombre', 'edad', 'genero', 'materia', 'fecha', 'acciones'];
-  dataSource: Maestro[] = [];
+  dataSource$: Observable<Maestro[]>;
+  errorCarga$: Observable<Error | null>;
+  estaCargando$: Observable<boolean>;
   
   estaCargando = false;
 
   constructor(
     private matDialog: MatDialog,
-    private maestrosServicio: MaestrosService
-  ){}
-
-  ngOnInit(): void {
-    this.cargarMaestros();
+    private store : Store
+  ){
+    this.dataSource$ = this.store.select(selectMaestros);
+    this.errorCarga$ = this.store.select(selectErrorMaestros);
+    this.estaCargando$ = this.store.select(selectCargandoMaestros);
   }
 
-  cargarMaestros(): void{
-    this.estaCargando = true;
-    this.maestrosServicio.obtenerMaestros().subscribe({
-      next: (maestros) => {
-        this.dataSource = maestros;
-      },
-      error: (error) => {
-        console.error(error);
-        this.estaCargando = false;
-      },
-      complete: () => {
-        console.log("Maestros cargados");
-        this.estaCargando = false;
-      }
-    })
+  ngOnInit(): void {
+    this.store.dispatch(MaestrosActions.cargarMaestros());
   }
 
   agregarMaestro(resultado: Maestro):void{
-    let cargarMaestros:boolean = false;
-    this.maestrosServicio.agregarMaestro(resultado).subscribe({
-      next: (maestros) => {
-        cargarMaestros= maestros;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        console.log("Maestro agregado");
-        if(cargarMaestros)
-          this.cargarMaestros();
-      }
-    })
+    this.store.dispatch(MaestrosActions.crearMaestro({maestroNuevo: resultado}));
   }
 
   actualizarMaestro(id: number, maestroActualizado: Maestro): void{
-    let cargarMaestros:boolean = false;
-    this.maestrosServicio.actualizarMaestro(id, maestroActualizado).subscribe({
-      next: (maestros) => {
-        cargarMaestros= maestros;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        console.log("Maestro actualizado");
-        if(cargarMaestros)
-          this.cargarMaestros();
-      }
-    })
+    this.store.dispatch(MaestrosActions.actualizarMaestro({id:id, maestroActualizado:maestroActualizado}));
   }
   
   borrarMaestro(id: number) {
-    if (confirm('Esta seguro?')) {
-      let cargarMaestros:boolean = false;
-      this.maestrosServicio.borrarMaestro(id).subscribe({
-        next: (maestros) => {
-          cargarMaestros= maestros;
-        },
-        error: (error) => {
-          console.error(error);
-        },
-        complete: () => {
-          console.log("Maestro borrado");
-          if(cargarMaestros)
-            this.cargarMaestros();
-        }
-      })
+    if (confirm('Esta seguro de eliminar este maestros')) {
+      this.store.dispatch(MaestrosActions.borrarMaestro({id:id}));
     }
   }
 
   openModal(editarMaestro?: Maestro): void {
-    const tamano = (this.dataSource.length + 1);
+    const tamano = Math.floor(Math.random() * 1000);
     this.matDialog
       .open(MaestrosDialogComponent, {
         data: {

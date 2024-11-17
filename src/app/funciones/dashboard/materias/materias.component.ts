@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Materia } from '../../../modelos/materia-model';
 import { MateriasDialogComponent } from './materias-dialog/materias-dialog.component';
-import { MateriasService } from '../../../core/services/materias.service';
+import { Store } from '@ngrx/store';
+import { MateriasActions } from './store/materias.actions';
+import { selectMaterias, selectErrorMaterias, selectCargandoMaterias} from './store/materias.selectors';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-materias',
@@ -11,91 +14,39 @@ import { MateriasService } from '../../../core/services/materias.service';
 })
 export class MateriasComponent {
   displayedColumns: string[] = ['id', 'nombre', 'creditos', 'fecha', 'acciones'];
-  dataSource: Materia[] = [];
+  dataSource$: Observable<Materia[]>;
+  errorCarga$: Observable<Error | null>;
+  estaCargando$: Observable<boolean>;
   
-  estaCargando = false;
-
   constructor(
     private matDialog: MatDialog,
-    private materiasServicio: MateriasService
-  ){}
-
-  ngOnInit(): void {
-    this.cargarMaterias();
+    private store: Store
+  ){
+    this.dataSource$ = this.store.select(selectMaterias);
+    this.errorCarga$= this.store.select(selectErrorMaterias);
+    this.estaCargando$ = this.store.select(selectCargandoMaterias);
   }
 
-  cargarMaterias(): void{
-    this.estaCargando = true;
-    this.materiasServicio.obtenerMaterias().subscribe({
-      next: (materias) => {
-        this.dataSource = materias;
-      },
-      error: (error) => {
-        console.error(error);
-        this.estaCargando = false;
-      },
-      complete: () => {
-        console.log("Materias cargados");
-        this.estaCargando = false;
-      }
-    })
+  ngOnInit(): void {
+    this.store.dispatch(MateriasActions.cargarMaterias());
   }
 
   agregarMateria(resultado: Materia):void{
-    let cargarMaterias:boolean = false;
-    this.materiasServicio.agregarMateria(resultado).subscribe({
-      next: (materias) => {
-        cargarMaterias = materias;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        console.log("Materia agregado");
-        if(cargarMaterias)
-          this.cargarMaterias();
-      }
-    })
+    this.store.dispatch(MateriasActions.crearMateria({materiaNuevo: resultado}));
   }
 
   actualizarMateria(id: number, materiaActualizado: Materia): void{
-    let cargarMaterias:boolean = false;
-    this.materiasServicio.actualizarMateria(id, materiaActualizado).subscribe({
-      next: (materias) => {
-        cargarMaterias = materias;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-      complete: () => {
-        console.log("Materia actualizado");
-        if(cargarMaterias)
-          this.cargarMaterias();
-      }
-    })
+    this.store.dispatch(MateriasActions.actualizarMateria({id:id, materiaActualizado:materiaActualizado}))
   }
   
   borrarMateria(id: number) {
-    if (confirm('Esta seguro?')) {
-      let cargarMaterias:boolean = false;
-      this.materiasServicio.borrarMateria(id).subscribe({
-        next: (materias) => {
-          cargarMaterias = materias;
-        },
-        error: (error) => {
-          console.error(error);
-        },
-        complete: () => {
-          console.log("Materia borrado");
-          if(cargarMaterias)
-            this.cargarMaterias();
-        }
-      })
-    }
+    if(confirm('Esta seguro de eliminar este materia')){
+      this.store.dispatch(MateriasActions.borrarMateria({id:id}))
+    } 
   }
 
   openModal(editarMateria?: Materia): void {
-    const tamano = (this.dataSource.length + 1);
+    const tamano = Math.floor(Math.random() * 1000);
     this.matDialog
       .open(MateriasDialogComponent, {
         data: {
