@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Materia } from '../../../../modelos';
+import { Materia, Maestro } from '../../../../modelos';
 
 export const MateriasActions = createActionGroup({
   source: 'Materias',
@@ -9,6 +9,11 @@ export const MateriasActions = createActionGroup({
     'Cargar materias': emptyProps(),
     'Cargar materias Exito': props<{data: Materia[]}>(),
     'Cargar materias Error': props<{error: Error}>(),
+
+    //consultar maestros
+    'Cargar maestros': emptyProps(),
+    'Cargar maestros Exito': props<{data: Maestro[]}>(),
+    'Cargar maestros Error': props<{error: Error}>(),
 
     //crear materia
     'Crear materia': props<{materiaNuevo: Materia}>(),

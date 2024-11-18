@@ -6,6 +6,7 @@ import { Observable, EMPTY, of } from 'rxjs';
 import { MateriasActions } from './materias.actions';
 
 import { MateriasService } from '../../../../core/services/materias.service';
+import { MaestrosService } from '../../../../core/services/maestros.service';
 
 @Injectable()
 export class MateriasEffects {
@@ -17,8 +18,9 @@ export class MateriasEffects {
   actualizarMateriaExito$: Observable<any>;
   borrarMateria$: Observable<any>;
   borrarMateriaExito$: Observable<any>;
+  cargarMaestros$: Observable<any>;
 
-  constructor(private actions$: Actions, private materiasService: MateriasService) {
+  constructor(private actions$: Actions, private materiasService: MateriasService, private maestrosService: MaestrosService) {
     this.cargarMaterias$ = createEffect(() => {
       return this.actions$.pipe(
         ofType(MateriasActions.cargarMaterias),
@@ -94,6 +96,18 @@ export class MateriasEffects {
       return this.actions$.pipe(
         ofType(MateriasActions.borrarMateriaExito),
         map(() => MateriasActions.cargarMaterias())
+      )
+    })
+
+    this.cargarMaestros$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(MateriasActions.cargarMaestros),
+        concatMap(() => 
+          this.maestrosService.obtenerMaestros().pipe(
+            map((response) => MateriasActions.cargarMaestrosExito({data: response})),
+            catchError((error) => of(MateriasActions.cargarMaestrosError({error})))
+          )
+        )
       )
     })
   }

@@ -48,8 +48,16 @@
       "genero": "Hombre",
       "creditos": 100,
       "id": "850",
-      "fechaCreacion": "2024-11-17T06:05:38.648Z",
-      "token": "KVPSovzNw0Vt7728rJzH"
+      "fechaCreacion": "2024-11-17T06:05:38.648Z"
+    },
+    {
+      "id": "771",
+      "nombre": "Oscar",
+      "apellido": "Del monte",
+      "edad": 35,
+      "genero": "Hombre",
+      "creditos": 200,
+      "fechaCreacion": "2024-11-18T05:35:51.411Z"
     }
   ],
   "maestros": [
@@ -59,7 +67,6 @@
       "apellido": "Perez",
       "edad": 40,
       "genero": "Hombre",
-      "materia": "Calculo",
       "fechaCreacion": "2024-11-04T23:21:12.711Z"
     },
     {
@@ -68,22 +75,39 @@
       "apellido": "Parra",
       "edad": 35,
       "genero": "Mujer",
-      "materia": "Redes",
       "fechaCreacion": "2024-11-04T23:21:12.711Z"
+    },
+    {
+      "id": "634",
+      "nombre": "rr",
+      "apellido": "rr",
+      "edad": 45,
+      "genero": "Hombre",
+      "fechaCreacion": "2024-11-18T08:47:01.915Z"
     }
   ],
   "materias": [
     {
-      "id": "1",
-      "nombre": "Calculo",
-      "creditos": 75,
-      "fechaCreacion": "2024-11-04T23:21:12.711Z"
+      "id": "53",
+      "nombre": "ee",
+      "creditos": 100,
+      "maestroId": "2",
+      "fechaCreacion": "2024-11-18T07:27:40.328Z"
     },
     {
-      "id": "2",
-      "nombre": "Redes",
-      "creditos": 75,
-      "fechaCreacion": "2024-11-04T23:21:12.711Z"
+      "nombre": "Electro",
+      "creditos": 50,
+      "maestroId": "1",
+      "id": "148",
+      "fechaCreacion": "2024-11-18T08:48:23.341Z",
+      "token": "9ZrJLmU6EyiT819Tx8Ns"
+    },
+    {
+      "id": "637",
+      "nombre": "rt",
+      "creditos": 100,
+      "maestroId": "2",
+      "fechaCreacion": "2024-11-18T09:14:20.346Z"
     }
   ]
 }

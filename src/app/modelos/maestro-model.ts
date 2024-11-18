@@ -4,6 +4,5 @@ export interface Maestro {
     edad: number,
     genero: string,
     apellido: string,
-    materia: string,
     fechaCreacion: Date,
 }

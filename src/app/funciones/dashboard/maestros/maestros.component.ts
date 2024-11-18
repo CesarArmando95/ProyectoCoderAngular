@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
   styleUrl: './maestros.component.scss'
 })
 export class MaestrosComponent {
-  displayedColumns: string[] = ['id', 'nombre', 'edad', 'genero', 'materia', 'fecha', 'acciones'];
+  displayedColumns: string[] = ['id', 'nombre', 'edad', 'genero', 'fecha', 'acciones'];
   dataSource$: Observable<Maestro[]>;
   errorCarga$: Observable<Error | null>;
   estaCargando$: Observable<boolean>;

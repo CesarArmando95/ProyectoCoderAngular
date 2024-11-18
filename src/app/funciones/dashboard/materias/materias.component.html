@@ -32,6 +32,15 @@
           <th mat-header-cell *matHeaderCellDef>Créditos</th>
           <td mat-cell *matCellDef="let materia">{{ materia.creditos}}</td>
         </ng-container>
+
+        <ng-container matColumnDef="maestroId">
+          <th mat-header-cell *matHeaderCellDef>Maestro</th>
+          <td mat-cell *matCellDef="let materia">
+            <div *ngFor="let m of (dataMaestros$ | async) | filtrarArreglo: materia.maestroId">
+              {{m.nombre}} {{m.apellido}}
+            </div>
+        </td>
+        </ng-container>
     
         <!-- Symbol Column -->
         <ng-container matColumnDef="fecha">

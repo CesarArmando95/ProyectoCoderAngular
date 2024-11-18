@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors} from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Maestro } from '../../../../modelos';
 
 
 @Component({
@@ -10,15 +11,18 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class MateriasDialogComponent {
   materiaFormulario: FormGroup;
   tamano?: number;
+  maestros?: Maestro[];
   constructor(
     private matDialogRef: MatDialogRef<MateriasDialogComponent>,
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data?: any
   ) {
     this.tamano = data.tamano;
+    this.maestros = data.maestro;
     this.materiaFormulario = this.formBuilder.group({
       nombre: [null, [Validators.required, Validators.maxLength(30)]],
-      creditos: [null, [Validators.required, this.creditosValidator]]
+      creditos: [null, [Validators.required, this.creditosValidator]],
+      maestroId: [null, [Validators.required]]
     });
     this.patchFormValue();
   }

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Materia } from '../../../modelos/materia-model';
+import { Materia, Maestro } from '../../../modelos';
 import { MateriasDialogComponent } from './materias-dialog/materias-dialog.component';
 import { Store } from '@ngrx/store';
 import { MateriasActions } from './store/materias.actions';
-import { selectMaterias, selectErrorMaterias, selectCargandoMaterias} from './store/materias.selectors';
+import * as selectores from './store/materias.selectors';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -13,22 +13,36 @@ import { Observable } from 'rxjs';
   styleUrl: './materias.component.scss'
 })
 export class MateriasComponent {
-  displayedColumns: string[] = ['id', 'nombre', 'creditos', 'fecha', 'acciones'];
+  displayedColumns: string[] = ['id', 'nombre', 'creditos', 'maestroId', 'fecha', 'acciones'];
   dataSource$: Observable<Materia[]>;
   errorCarga$: Observable<Error | null>;
   estaCargando$: Observable<boolean>;
+
+  dataMaestros$: Observable<Maestro[]>;
+  errorCargaMaestros$: Observable<Error | null>;
+  estaCargandoMaestros$: Observable<boolean>;
   
   constructor(
     private matDialog: MatDialog,
     private store: Store
   ){
-    this.dataSource$ = this.store.select(selectMaterias);
-    this.errorCarga$= this.store.select(selectErrorMaterias);
-    this.estaCargando$ = this.store.select(selectCargandoMaterias);
+    this.dataSource$ = this.store.select(selectores.selectMaterias);
+    this.errorCarga$= this.store.select(selectores.selectErrorMaterias);
+    this.estaCargando$ = this.store.select(selectores.selectCargandoMaterias);
+    
+    this.dataMaestros$ = this.store.select(selectores.selectMaestros);
+    this.errorCargaMaestros$ = this.store.select(selectores.selectErrorMaestros);
+    this.estaCargandoMaestros$ = this.store.select(selectores.selectCargandoMaestros);
   }
+
+  private maestrosDialog: Maestro[] = []
 
   ngOnInit(): void {
     this.store.dispatch(MateriasActions.cargarMaterias());
+    this.store.dispatch(MateriasActions.cargarMaestros());
+    this.dataMaestros$.subscribe(valor => {
+      this.maestrosDialog=valor
+    })
   }
 
   agregarMateria(resultado: Materia):void{
@@ -47,11 +61,13 @@ export class MateriasComponent {
 
   openModal(editarMateria?: Materia): void {
     const tamano = Math.floor(Math.random() * 1000);
+    const maestro = this.maestrosDialog
     this.matDialog
       .open(MateriasDialogComponent, {
         data: {
           editarMateria,
           tamano,
+          maestro,
         },
       })
       .afterClosed()
@@ -68,4 +84,12 @@ export class MateriasComponent {
       });
   }
 
+  nombreMaestro(id:number): string{
+    const maestro = this.maestrosDialog.filter(m => m.id === id)[0];
+    return `${maestro.nombre} ${maestro.apellido}`
+  }
+
+}
+function ngOnDestroy() {
+  throw new Error('Function not implemented.');
 }

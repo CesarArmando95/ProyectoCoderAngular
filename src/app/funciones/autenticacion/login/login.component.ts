@@ -40,7 +40,7 @@ export class LoginComponent {
       // login
       this.autenticacionService.login(this.loginForm.value).subscribe({
         next: (result) => {
-          this.router.navigate(['dashboard', 'usuarios']);
+          this.router.navigate(['dashboard', 'inicio']);
         },
         error: (err) => {
           console.error(err);

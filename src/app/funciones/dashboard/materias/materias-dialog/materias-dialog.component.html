@@ -5,7 +5,7 @@
   <div mat-dialog-content>
     <form [formGroup]="materiaFormulario">
       <div class="row">
-        <div class="col-6">
+        <div class="col-5">
           <mat-form-field class="example-form-field w-100">
             <mat-label>Nombre</mat-label>
             <input formControlName="nombre" matInput type="text" />
@@ -18,7 +18,20 @@
             </mat-error>
           </mat-form-field>
         </div>
-        <div class="col-6">
+        <div class="col-7">
+          <mat-form-field class="w-100">
+            <mat-label>Maestro</mat-label>
+            <mat-select formControlName="maestroId">
+              <mat-option
+                [value]="maestro.id"
+                *ngFor="let maestro of maestros"
+              >
+                {{ maestro.nombre }} {{ maestro.apellido }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-5">
           <mat-form-field class="example-form-field w-100">
             <mat-label>Créditos</mat-label>
             <input formControlName="creditos" matInput type="number" />

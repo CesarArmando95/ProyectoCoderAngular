@@ -20,8 +20,7 @@ export class MaestrosDialogComponent {
       nombre: [null, [Validators.required, Validators.maxLength(30)]],
       apellido: [null, [Validators.required, Validators.maxLength(30)]],
       edad: [null, [Validators.required, this.edadValidator]],
-      genero: [null, [Validators.required]],
-      materia: [null, [Validators.required, Validators.maxLength(30)]]
+      genero: [null, [Validators.required]]
     });
     this.patchFormValue();
   }

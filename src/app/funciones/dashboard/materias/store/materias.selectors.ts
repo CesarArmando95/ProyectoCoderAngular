@@ -19,3 +19,18 @@ export const selectCargandoMaterias = createSelector(
   selectMateriasState,
   (state) => state.cargando
 )
+
+export const selectMaestros = createSelector(
+  selectMateriasState,
+  (state) => state.maestros
+);
+
+export const selectErrorMaestros = createSelector(
+  selectMateriasState,
+  (state) => state.errorCosultaMaestros
+)
+
+export const selectCargandoMaestros= createSelector(
+  selectMateriasState,
+  (state) => state.cargandoMaestros
+)
