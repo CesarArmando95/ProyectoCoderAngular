@@ -3,7 +3,6 @@ import { Maestro } from '../../modelos/maestro-model';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { generadorToken } from "../../compartidas/herramientas/generadorToken";
 import { catchError, map } from 'rxjs/operators';
 
 
@@ -34,7 +33,6 @@ actualizarMaestro(id: number, maestroActualizado: Partial<Maestro>):Observable<M
     return this.httpClient.put<Maestro>(`${this.baseURL}/maestros/${id}` ,{
         ...maestroActualizado,
         fechaCreacion: new Date().toISOString(),
-        token: generadorToken(20),
     })   
 }
 }

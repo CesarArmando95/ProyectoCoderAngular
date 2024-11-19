@@ -28,6 +28,11 @@ const routes: Routes = [
       import('./materias/materias.module').then((m) => m.MateriasModule)  
   },
   {
+    path: 'cerrar',
+    loadChildren:() =>
+      import('../autenticacion/autenticacion.module').then((m) => m.AutenticacionModule)  
+  },
+  {
     path: '**',
     redirectTo: 'inicio'
   }

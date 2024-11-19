@@ -9,7 +9,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 
 import { CompatidasModule } from '../../compartidas/compartidas.module';
-import { EffectsModule } from '@ngrx/effects';
+import { AlumnosModule } from "./alumnos/alumnos.module";
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -20,7 +20,8 @@ import { EffectsModule } from '@ngrx/effects';
     MatToolbarModule,
     CompatidasModule,
     MatListModule,
-  ],
+    AlumnosModule
+],
   exports: [DashboardComponent],
 })
 export class DashboardModule {}

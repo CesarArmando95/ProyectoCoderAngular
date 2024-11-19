@@ -24,6 +24,7 @@ export class AutenticacionService {
     if (!!usuarios[0]) {
       this.store.dispatch(AutenticacionActions.setAuthenticatedUser({usuario: usuarios[0]}))
       localStorage.setItem('token', usuarios[0].token);
+      localStorage.setItem('rol', usuarios[0].rol);
       return usuarios[0];
     } else {
       return null;

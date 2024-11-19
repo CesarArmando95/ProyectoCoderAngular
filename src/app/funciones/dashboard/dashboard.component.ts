@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class DashboardComponent {
   showFiller = false;
+  usuarioLogeado = localStorage.getItem('rol');
+
+  constructor(private router : Router){}
+
+  navegarAOtroComponente(){
+    this.router.navigate(['../autenticacion/autenticacion.module'])
+  }
 }

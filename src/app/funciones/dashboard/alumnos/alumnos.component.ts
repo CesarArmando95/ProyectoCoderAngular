@@ -17,6 +17,7 @@ export class AlumnosComponent {
   dataSource$: Observable<Alumno[]>;
   errorCarga$: Observable<Error | null>;
   estaCargando$: Observable<boolean>;
+  usuarioLogeado = localStorage.getItem('rol');
 
   constructor(
     private matDialog: MatDialog,

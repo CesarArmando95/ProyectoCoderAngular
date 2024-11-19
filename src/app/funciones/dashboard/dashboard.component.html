@@ -5,9 +5,9 @@
         <mat-list-item role="listitem"><a 
           routerLinkActive="active"
           routerLink="inicio"
-          ><mat-icon aria-hidden="false" fontIcon="person"></mat-icon>
+          ><mat-icon aria-hidden="false" fontIcon="home"></mat-icon>
           Inicio</a></mat-list-item>
-        <mat-list-item role="listitem"><a 
+        <mat-list-item role="listitem" *ngIf="usuarioLogeado === 'admin'"><a 
           routerLinkActive="active"
           routerLink="usuarios"
           ><mat-icon aria-hidden="false" fontIcon="person"></mat-icon>
@@ -27,6 +27,9 @@
           routerLink="materias"
           ><mat-icon aria-hidden="false" fontIcon="poll" class="pocicion-iconos"></mat-icon>
           Materias</a></mat-list-item>
+        <mat-list-item (click) = "navegarAOtroComponente()"><a
+          ><mat-icon aria-hidden="false" fontIcon="close" class="pocicion-iconos"></mat-icon>
+          Cerrar sesión</a></mat-list-item>
       </mat-list>
     </mat-drawer>
   

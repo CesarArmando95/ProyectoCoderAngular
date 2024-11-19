@@ -5,14 +5,16 @@
       "correo": "manuel@mail.com",
       "fechaCreacion": "2024-10-24T00:14:33.140Z",
       "contrasena": "123456",
-      "token": "ndsHSBnsdjkasJs354MSjsnmvcs332SJnxjS"
+      "token": "ndsHSBnsdjkasJs354MSjsnmvcs332SJnxjS",
+      "rol": "admin"
     },
     {
       "id": "2",
       "correo": "lorena@mail.com",
       "fechaCreacion": "2024-10-24T00:14:33.140Z",
       "contrasena": "789456",
-      "token": "ndsHSBnsdjkasJs354MSjsnmvcs332SJnxjS"
+      "token": "ndsHSBnsdjkasJs354MSjsnmvcs992SJnxjS",
+      "rol": "user"
     },
     {
       "correo": "Juan@gmail.com",

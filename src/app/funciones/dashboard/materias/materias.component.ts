@@ -17,6 +17,7 @@ export class MateriasComponent {
   dataSource$: Observable<Materia[]>;
   errorCarga$: Observable<Error | null>;
   estaCargando$: Observable<boolean>;
+  usuarioLogeado = localStorage.getItem('rol');
 
   dataMaestros$: Observable<Maestro[]>;
   errorCargaMaestros$: Observable<Error | null>;

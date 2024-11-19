@@ -3,8 +3,6 @@ import { Alumno } from '../../modelos/alumno-model';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { generadorToken } from "../../compartidas/herramientas/generadorToken";
-import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -34,7 +32,6 @@ export class AlumnoService {
         return this.httpClient.put<Alumno>(`${this.baseURL}/alumnos/${id}` ,{
             ...alumnoActualizado,
             fechaCreacion: new Date().toISOString(),
-            token: generadorToken(20),
         })  
     }
 }

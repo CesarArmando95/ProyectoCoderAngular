@@ -3,6 +3,6 @@ export interface Usuario{
     correo: string,
     fechaCreacion: Date,
     contrasena: string,
-    token: string
+    token: string,
     rol: string
 }

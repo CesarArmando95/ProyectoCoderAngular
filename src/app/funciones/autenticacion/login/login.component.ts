@@ -25,6 +25,13 @@ export class LoginComponent {
     });
   }
 
+  ngOnInit(): void {
+    if(localStorage.getItem('token'))
+      localStorage.removeItem('token');
+    if(localStorage.getItem('rol'))
+      localStorage.removeItem('rol');
+  }
+
   togglePasswordInputType(): void {
     if (this.passwordInputType === 'contrasena') {
       this.passwordInputType = 'text';

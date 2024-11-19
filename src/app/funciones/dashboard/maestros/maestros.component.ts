@@ -17,6 +17,7 @@ export class MaestrosComponent {
   dataSource$: Observable<Maestro[]>;
   errorCarga$: Observable<Error | null>;
   estaCargando$: Observable<boolean>;
+  usuarioLogeado = localStorage.getItem('rol');
   
   estaCargando = false;
 

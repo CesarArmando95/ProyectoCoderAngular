@@ -3,7 +3,6 @@ import { Observable, of } from 'rxjs';
 import { Materia } from '../../modelos/materia-model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { generadorToken } from "../../compartidas/herramientas/generadorToken";
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +32,6 @@ actualizarMateria(id: number, materiaActualizado: Partial<Materia>):Observable<M
     return this.httpClient.put<Materia>(`${this.baseURL}/materias/${id}` ,{
         ...materiaActualizado,
         fechaCreacion: new Date().toISOString(),
-        token: generadorToken(20),
     })  
 }
 }
