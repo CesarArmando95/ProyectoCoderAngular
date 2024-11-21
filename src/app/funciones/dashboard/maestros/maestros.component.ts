@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Maestro } from '../../../modelos/maestro-model';
+import { Maestro, Usuario } from '../../../modelos';
 import { MaestrosDialogComponent } from './maestros-dialog/maestros-dialog.component';
 import { Store } from '@ngrx/store';
 import { MaestrosActions } from './store/maestros.actions';
 import { selectMaestros, selectErrorMaestros, selectCargandoMaestros } from './store/maestros.selectors';
 import { Observable } from 'rxjs';
+import { AutenticacionService } from '../../../core/services/autenticacion.service';
 
 @Component({
   selector: 'app-maestros',
@@ -17,17 +18,22 @@ export class MaestrosComponent {
   dataSource$: Observable<Maestro[]>;
   errorCarga$: Observable<Error | null>;
   estaCargando$: Observable<boolean>;
-  usuarioLogeado = localStorage.getItem('rol');
+  usuarioLogeado$ : Observable<Usuario | null>;
+  rol: string | undefined;
   
   estaCargando = false;
 
   constructor(
     private matDialog: MatDialog,
-    private store : Store
+    private store : Store,
+    private autenticacionService: AutenticacionService
   ){
     this.dataSource$ = this.store.select(selectMaestros);
     this.errorCarga$ = this.store.select(selectErrorMaestros);
     this.estaCargando$ = this.store.select(selectCargandoMaestros);
+    this.rol = "";
+    this.usuarioLogeado$ = this.autenticacionService.authUser$;
+    this.usuarioLogeado$.subscribe((respuesta) => this.rol = respuesta?.rol)
   }
 
   ngOnInit(): void {

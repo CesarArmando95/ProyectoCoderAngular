@@ -7,13 +7,13 @@
       <div class="row">
         <div class="col-6">
           <mat-form-field class="example-form-field w-100">
-            <mat-label>Correo</mat-label>
-            <input formControlName="correo" matInput type="text" />
+            <mat-label>Nombre</mat-label>
+            <input formControlName="nombre" matInput type="text" />
             <mat-error>
-              @if(usuarioFormulario.get('correo')?.hasError('required')) { Este campo es
+              @if(usuarioFormulario.get('nombre')?.hasError('required')) { Este campo es
               requerido }
-              @else if(usuarioFormulario.get('correo')?.hasError('maxlength')){
-                El correo no puede tener más de 30 caracteres
+              @else if(usuarioFormulario.get('nombre')?.hasError('maxlength')){
+                El nombre no puede tener más de 15 caracteres
               }
             </mat-error>
           </mat-form-field>
@@ -21,14 +21,40 @@
         <div class="col-6">
           <mat-form-field class="example-form-field w-100">
             <mat-label>Contraseña</mat-label>
-            <input formControlName="contrasena" matInput type="text" />
+            <input formControlName="direccion" matInput type="text" />
             <mat-error>
-              @if(usuarioFormulario.get('contrasena')?.hasError('required')) { Este campo es
+              @if(usuarioFormulario.get('direccion')?.hasError('required')) { Este campo es
               requerido }
-              @else if(usuarioFormulario.get('contrasena')?.hasError('maxlength')){
-                La contraseña no puede tener más de 30 caracteres
+              @else if(usuarioFormulario.get('direccion')?.hasError('maxlength')){
+                La dirección no puede tener más de 50 caracteres
               }
             </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>Contraseña</mat-label>
+            <input formControlName="telefono" matInput type="text" />
+            <mat-error>
+              @if(usuarioFormulario.get('telefono')?.hasError('required')) { Este campo es
+              requerido }
+              @else if(usuarioFormulario.get('telefono')?.hasError('maxlength')){
+                El telefono no puede tener más de 10 caracteres
+              }
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-6">
+          <mat-form-field class="example-form-field w-100">
+            <mat-label>seleccione el rol de la persona</mat-label>
+              <select matNativeControl required formControlName="rol">
+                <option value="admin">Administrador</option>
+                <option value="user">Usuario</option>
+              </select>
+              @if (usuarioFormulario.get('rol')?.hasError('required')) {
+                <mat-error>Este campo es
+                  requerido</mat-error>
+              }
           </mat-form-field>
         </div>
       </div>

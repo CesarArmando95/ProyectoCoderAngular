@@ -6,22 +6,32 @@
       "fechaCreacion": "2024-10-24T00:14:33.140Z",
       "contrasena": "123456",
       "token": "ndsHSBnsdjkasJs354MSjsnmvcs332SJnxjS",
-      "rol": "admin"
+      "rol": "admin",
+      "nombre": "manuel",
+      "direccion": "san cristobal",
+      "telefono": "6247895623"
     },
     {
-      "id": "2",
-      "correo": "lorena@mail.com",
-      "fechaCreacion": "2024-10-24T00:14:33.140Z",
+      "rol": "admin",
       "contrasena": "789456",
-      "token": "ndsHSBnsdjkasJs354MSjsnmvcs992SJnxjS",
-      "rol": "user"
+      "id": "2",
+      "fechaCreacion": "2024-11-21T07:15:18.237Z",
+      "correo": "lorena@mail.com",
+      "token": "4xivdKIoiz2wcaHFUhAG",
+      "nombre": "manuel",
+      "direccion": "calle dolores",
+      "telefono": "6248527419"
     },
     {
-      "correo": "Juan@gmail.com",
+      "rol": "user",
       "contrasena": "456789",
+      "nombre": "Juan",
+      "direccion": "calle Luna",
+      "telefono": "6247418956",
       "id": "3",
-      "fechaCreacion": "2024-11-04T23:21:12.711Z",
-      "token": "9ZkwDonoCaRTqZLPhCi5"
+      "fechaCreacion": "2024-11-21T08:04:39.371Z",
+      "correo": "Juan@gmail.com",
+      "token": "oXfOHTSBTtTsHUXo5Bv1"
     }
   ],
   "alumnos": [
@@ -42,24 +52,6 @@
       "genero": "Mujer",
       "creditos": 150,
       "fechaCreacion": "2024-11-04T23:21:12.711Z"
-    },
-    {
-      "nombre": "poncho",
-      "apellido": "matias",
-      "edad": 58,
-      "genero": "Hombre",
-      "creditos": 100,
-      "id": "850",
-      "fechaCreacion": "2024-11-17T06:05:38.648Z"
-    },
-    {
-      "id": "771",
-      "nombre": "Oscar",
-      "apellido": "Del monte",
-      "edad": 35,
-      "genero": "Hombre",
-      "creditos": 200,
-      "fechaCreacion": "2024-11-18T05:35:51.411Z"
     }
   ],
   "maestros": [

@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Materia, Maestro } from '../../../modelos';
+import { Materia, Maestro, Usuario } from '../../../modelos';
 import { MateriasDialogComponent } from './materias-dialog/materias-dialog.component';
 import { Store } from '@ngrx/store';
 import { MateriasActions } from './store/materias.actions';
 import * as selectores from './store/materias.selectors';
 import { Observable } from 'rxjs';
+import { AutenticacionService } from '../../../core/services/autenticacion.service';
 
 @Component({
   selector: 'app-materias',
@@ -17,7 +18,8 @@ export class MateriasComponent {
   dataSource$: Observable<Materia[]>;
   errorCarga$: Observable<Error | null>;
   estaCargando$: Observable<boolean>;
-  usuarioLogeado = localStorage.getItem('rol');
+  usuarioLogeado$ : Observable<Usuario | null>;
+  rol: string | undefined;
 
   dataMaestros$: Observable<Maestro[]>;
   errorCargaMaestros$: Observable<Error | null>;
@@ -25,7 +27,8 @@ export class MateriasComponent {
   
   constructor(
     private matDialog: MatDialog,
-    private store: Store
+    private store: Store,
+    private autenticacionService: AutenticacionService
   ){
     this.dataSource$ = this.store.select(selectores.selectMaterias);
     this.errorCarga$= this.store.select(selectores.selectErrorMaterias);
@@ -34,6 +37,10 @@ export class MateriasComponent {
     this.dataMaestros$ = this.store.select(selectores.selectMaestros);
     this.errorCargaMaestros$ = this.store.select(selectores.selectErrorMaestros);
     this.estaCargandoMaestros$ = this.store.select(selectores.selectCargandoMaestros);
+
+    this.rol = "";
+    this.usuarioLogeado$ = this.autenticacionService.authUser$;
+    this.usuarioLogeado$.subscribe((respuesta) => this.rol = respuesta?.rol)
   }
 
   private maestrosDialog: Maestro[] = []

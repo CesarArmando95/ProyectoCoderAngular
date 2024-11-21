@@ -7,7 +7,7 @@
           routerLink="inicio"
           ><mat-icon aria-hidden="false" fontIcon="home"></mat-icon>
           Inicio</a></mat-list-item>
-        <mat-list-item role="listitem" *ngIf="usuarioLogeado === 'admin'"><a 
+        <mat-list-item role="listitem" *ngIf="this.rol === 'admin'"><a 
           routerLinkActive="active"
           routerLink="usuarios"
           ><mat-icon aria-hidden="false" fontIcon="person"></mat-icon>
@@ -28,6 +28,7 @@
           ><mat-icon aria-hidden="false" fontIcon="poll" class="pocicion-iconos"></mat-icon>
           Materias</a></mat-list-item>
         <mat-list-item (click) = "navegarAOtroComponente()"><a
+          routerLinkActive="active"
           ><mat-icon aria-hidden="false" fontIcon="close" class="pocicion-iconos"></mat-icon>
           Cerrar sesión</a></mat-list-item>
       </mat-list>
@@ -36,7 +37,7 @@
     <!-- AREA DERECHA (CONTENIDO) -->
     <div class="example-sidenav-content">
       <!-- TOOLBAR -->
-      <mat-toolbar class="fondo">
+      <mat-toolbar class="fondo d-flex">
         <button
           (click)="drawer.toggle()"
           mat-icon-button
@@ -46,6 +47,9 @@
           <mat-icon>menu</mat-icon>
         </button>
         <span>Gestión de escuela</span>
+        <span class="ms-auto" *ngIf ="usuarioLogeado$ | async; let usuarioLogeado">
+          Usuario: {{usuarioLogeado.nombre}}
+        </span>
       </mat-toolbar>
     </div>
     <router-outlet />

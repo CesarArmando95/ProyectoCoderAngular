@@ -10,15 +10,22 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class UsuariosDialogComponent {
   usuarioFormulario: FormGroup;
   tamano?: number;
+  correo?: string;
+  contrasena?: string;
   constructor(
     private matDialogRef: MatDialogRef<UsuariosDialogComponent>,
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data?: any
   ) {
     this.tamano = data.tamano;
+    this.correo = data.correo;
+    this.contrasena = data.contrasena;
     this.usuarioFormulario = this.formBuilder.group({
-      correo: [null, [Validators.required, Validators.maxLength(30)]],
+      rol: [null, [Validators.required]],
       contrasena: [null, [Validators.required, Validators.maxLength(30)]],
+      nombre: [null, [Validators.required, Validators.maxLength(15)]],
+      direccion: [null, [Validators.required, Validators.maxLength(50)]],
+      telefono: [null, [Validators.required, Validators.maxLength(10)]]
     });
     this.patchFormValue();
   }
@@ -43,6 +50,8 @@ export class UsuariosDialogComponent {
         fechaCreacion: this.esEditado
           ? this.data!.editarUsuario!.fechaCreacion
           : new Date(),
+        correo: this.correo,
+        contrasena: this.contrasena  
       });
     }
   }

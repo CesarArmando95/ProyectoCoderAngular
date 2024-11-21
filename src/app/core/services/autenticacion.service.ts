@@ -12,7 +12,8 @@ import { selectAutheticatedUser } from '../../funciones/autenticacion/store/sele
 @Injectable({ providedIn: 'root' })
 export class AutenticacionService {
 
-  public authUser$: Observable<Usuario | null>;
+  private _authUser$ = new BehaviorSubject<null | Usuario>(null);
+  public authUser$ = this._authUser$.asObservable();
 
   private baseURL = environment.apiBaseURL;
 
@@ -24,7 +25,7 @@ export class AutenticacionService {
     if (!!usuarios[0]) {
       this.store.dispatch(AutenticacionActions.setAuthenticatedUser({usuario: usuarios[0]}))
       localStorage.setItem('token', usuarios[0].token);
-      localStorage.setItem('rol', usuarios[0].rol);
+      this._authUser$.next(usuarios[0]);
       return usuarios[0];
     } else {
       return null;

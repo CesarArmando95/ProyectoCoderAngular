@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { UsuariosActions } from './store/usuarios.actions';
 import { selectUsuarios, selectErrorUsuarios, selectCargandoUsuarios } from './store/usuarios.selectors';
 import { Observable } from 'rxjs';
+import { AutenticacionService } from '../../../core/services/autenticacion.service';
 
 
 @Component({
@@ -14,18 +15,24 @@ import { Observable } from 'rxjs';
   styleUrl: './usuarios.component.scss'
 })
 export class UsuariosComponent {
-  displayedColumns: string[] = ['id', 'correo', 'fecha', 'contrasena', 'acciones'];
+  displayedColumns: string[] = ['id', 'correo', 'nombre', 'telefono', 'direccion', 'fecha', 'rol', 'acciones'];
   dataSource$: Observable<Usuario[]>;
   errorCarga$: Observable<Error | null>;
   estaCargando$: Observable<boolean>;
+  usuarioLogeado$ : Observable<Usuario | null>;
+  rol: string | undefined;
 
   constructor(
     private matDialog: MatDialog,
-    private store: Store
+    private store: Store,
+    private autenticacionService: AutenticacionService
   ){
     this.dataSource$ = this.store.select(selectUsuarios);
     this.errorCarga$= this.store.select(selectErrorUsuarios);
     this.estaCargando$ = this.store.select(selectCargandoUsuarios);
+    this.rol = "";
+    this.usuarioLogeado$ = this.autenticacionService.authUser$;
+    this.usuarioLogeado$.subscribe((respuesta) => this.rol = respuesta?.rol)
   }
 
   ngOnInit(): void {
@@ -48,11 +55,15 @@ export class UsuariosComponent {
 
   openModal(editarUsuario?: Usuario): void {
     const tamano = Math.floor(Math.random() * 1000);
+    const correo = editarUsuario?.correo;
+    const contrasena = editarUsuario?.contrasena;
     this.matDialog
       .open(UsuariosDialogComponent, {
         data: {
           editarUsuario,
           tamano,
+          correo,
+          contrasena
         },
       })
       .afterClosed()

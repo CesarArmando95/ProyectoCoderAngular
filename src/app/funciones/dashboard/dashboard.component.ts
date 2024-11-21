@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AutenticacionService } from '../../core/services/autenticacion.service';
+import { Usuario } from '../../modelos';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,11 +11,17 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent {
   showFiller = false;
-  usuarioLogeado = localStorage.getItem('rol');
+  usuarioLogeado$ : Observable<Usuario | null>;
+  rol: string | undefined;
 
-  constructor(private router : Router){}
+  constructor(private router : Router,  private autenticacionService: AutenticacionService){
+    this.rol = "";
+    this.usuarioLogeado$ = this.autenticacionService.authUser$;
+    this.usuarioLogeado$.subscribe((respuesta) => this.rol = respuesta?.rol)
+  }
 
   navegarAOtroComponente(){
-    this.router.navigate(['../autenticacion/autenticacion.module'])
+    localStorage.removeItem('token');
+    this.router.navigate(['auth', 'login']);
   }
 }

@@ -4,5 +4,8 @@ export interface Usuario{
     fechaCreacion: Date,
     contrasena: string,
     token: string,
-    rol: string
+    rol: string,
+    nombre: string,
+    direccion: string,
+    telefono: string
 }
