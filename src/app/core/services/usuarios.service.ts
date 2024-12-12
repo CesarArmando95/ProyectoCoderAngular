@@ -23,6 +23,7 @@ export class UsuariosService{
             id: String(resultado.id),
             fechaCreacion: new Date().toISOString(),
             token: generadorToken(20),
+            rol: "user"
         })
     }
 

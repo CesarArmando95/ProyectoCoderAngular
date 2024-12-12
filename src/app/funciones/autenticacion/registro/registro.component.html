@@ -1,1 +1,112 @@
-<p>registro works!</p>
+<div class="container">
+
+    @if(redireccionar){
+        <h1>{{messageCreated}}</h1>
+    }
+    @else {
+    <mat-card style="background-color: whitesmoke;">
+        <mat-card-title>
+            <h2 style="text-align: center;">Crea tu cuenta</h2>
+        </mat-card-title>
+        <mat-card-content>
+            <form class="form flex flex-center" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Nombre</mat-label>
+                            <input formControlName="nombre" matInput/>
+                            <mat-error>
+                                @if(nombreControl?.hasError('required')){
+                                    <small class="text-danger">El nombre es requerido</small>
+                                }
+                                @if(nombreControl?.hasError('minlength')){
+                                    <small class="text-danger">Este campo requiere al menos 3 caracteres</small>
+                                }
+                                @if(nombreControl?.hasError('pattern')){
+                                    <small class="text-danger">Este campo solo acepta letras</small>
+                                }
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Direccion</mat-label>
+                            <input formControlName="direccion" matInput/>
+                            <mat-error>
+                                @if(direccionControl?.hasError('required')){
+                                    <small class="text-danger">La dirección es requerido</small>
+                                }
+                                @if(direccionControl?.hasError('minlength')){
+                                    <small class="text-danger">Este campo requiere al menos 3 caracteres</small>
+                                }
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Telefono</mat-label>
+                            <input formControlName="telefono" matInput type="text"/>
+                            <mat-error>
+                                @if(direccionControl?.hasError('required')){
+                                    <small class="text-danger">El telefono es requerido</small>
+                                }
+                                @if(direccionControl?.hasError('minlength')){
+                                    <small class="text-danger">Este campo requiere al menos 6 caracteres</small>
+                                }
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Correo</mat-label>
+                            <input formControlName="correo" matInput/>
+                            <mat-error>
+                                @if(correoControl?.hasError('required')){
+                                    <small class="text-danger">El contraseña es requerido</small>
+                                }
+                                @if(correoControl?.hasError('minlength')){
+                                    <small class="text-danger">Este campo requiere al menos 5 caracteres</small>
+                                }
+                                @if(correoControl?.hasError('pattern')){
+                                    <small class="text-danger">Este campo debe ser de formato correo electrónico</small>
+                                }
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-6">
+                        <mat-form-field class="w-100">
+                            <mat-label>Contraseña</mat-label>
+                            <input formControlName="contrasena" [type]="contrasenaInputType" matInput/>
+                            <button
+                                type="button"
+                                (click)="togglePasswordInputType()"
+                                matSuffix
+                                mat-icon-button
+                                >
+                                <mat-icon>visibility</mat-icon>
+                            </button>
+                            <mat-error>
+                                @if(contrasenaControl?.hasError('required')){
+                                    <small class="text-danger">la contraseña es requerida</small>
+                                }
+                                @if(contrasenaControl?.hasError('minlength')){
+                                    <small class="text-danger">Este campo requiere al menos 6 caracteres</small>
+                                }
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row col-12">
+                    <button type="submit" class="w-100" mat-flat-button>Registrar</button>
+                </div>
+                <br>
+                <div style="text-align: center;" class="col-12">
+                    <p>¿Ya tienes cuenta? <a routerLink="/autenticacion/login" routerLinkActive="active" ariaCurrentWhenActive="page">Inicia sesión</a> </p>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+}
+</div>

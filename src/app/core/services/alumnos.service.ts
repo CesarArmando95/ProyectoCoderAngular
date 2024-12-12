@@ -31,7 +31,6 @@ export class AlumnoService {
     actualizarAlumno(id: number, alumnoActualizado: Partial<Alumno>):Observable<Alumno> {
         return this.httpClient.put<Alumno>(`${this.baseURL}/alumnos/${id}` ,{
             ...alumnoActualizado,
-            fechaCreacion: new Date().toISOString(),
         })  
     }
 }

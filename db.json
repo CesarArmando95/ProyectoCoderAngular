@@ -18,7 +18,7 @@
       "fechaCreacion": "2024-11-21T07:15:18.237Z",
       "correo": "lorena@mail.com",
       "token": "4xivdKIoiz2wcaHFUhAG",
-      "nombre": "manuel",
+      "nombre": "lorena",
       "direccion": "calle dolores",
       "telefono": "6248527419"
     },
@@ -32,6 +32,65 @@
       "fechaCreacion": "2024-11-21T08:04:39.371Z",
       "correo": "Juan@gmail.com",
       "token": "oXfOHTSBTtTsHUXo5Bv1"
+    },
+    {
+      "id": "393",
+      "nombre": "Lucas",
+      "direccion": "Miguel Gabilan",
+      "telefono": 6238964512,
+      "correo": "lucas@yahoo.com",
+      "contrasena": "lucas05",
+      "createdAt": "2024-12-12T07:05:07.097Z",
+      "type": "user",
+      "token": "bFsZmhZAJQhOWxe9y6qT",
+      "fechaCreacion": "2024-12-12T07:05:07.097Z",
+      "rol": "user"
+    },
+    {
+      "id": "337",
+      "nombre": "omar",
+      "direccion": "Hawai",
+      "telefono": "6784561296",
+      "correo": "omar@apple.com",
+      "contrasena": "omar45",
+      "createdAt": "2024-12-12T07:07:21.365Z",
+      "type": "user",
+      "token": "geKe1dLK1ZdTV5DyyURb",
+      "fechaCreacion": "2024-12-12T07:07:21.366Z",
+      "rol": "user"
+    },
+    {
+      "id": "897",
+      "nombre": "Oscar",
+      "direccion": "japon",
+      "telefono": "1237894152",
+      "correo": "leon@logi.com",
+      "contrasena": "apple78",
+      "fechaCreacion": "2024-12-12T07:18:37.008Z",
+      "token": "MxMVFpalEea8DWqfghGc",
+      "rol": "user"
+    },
+    {
+      "id": "163",
+      "nombre": "marco",
+      "direccion": "USA",
+      "telefono": "1239637845",
+      "correo": "marco@xbox.com",
+      "contrasena": "marco78",
+      "fechaCreacion": "2024-12-12T07:27:54.969Z",
+      "token": "0p11EzfAHnVCKVCza5Qe",
+      "rol": "user"
+    },
+    {
+      "rol": "admin",
+      "contrasena": "mickey24",
+      "nombre": "mickey",
+      "direccion": "los angeles",
+      "telefono": "7894563214",
+      "id": "711",
+      "fechaCreacion": "2024-12-12T07:38:18.503Z",
+      "correo": "mickey@disney.com",
+      "token": "q79JmpuPChOsGytszyy2"
     }
   ],
   "alumnos": [
@@ -52,6 +111,15 @@
       "genero": "Mujer",
       "creditos": 150,
       "fechaCreacion": "2024-11-04T23:21:12.711Z"
+    },
+    {
+      "id": "45",
+      "nombre": "Roberto",
+      "apellido": "Diaz",
+      "edad": 25,
+      "genero": "Hombre",
+      "creditos": 700,
+      "fechaCreacion": "2024-12-12T07:41:07.782Z"
     }
   ],
   "maestros": [
@@ -78,6 +146,14 @@
       "edad": 45,
       "genero": "Hombre",
       "fechaCreacion": "2024-11-18T08:47:01.915Z"
+    },
+    {
+      "id": "302",
+      "nombre": "Paco",
+      "apellido": "montolla",
+      "edad": 39,
+      "genero": "Hombre",
+      "fechaCreacion": "2024-12-12T07:40:08.518Z"
     }
   ],
   "materias": [
@@ -102,6 +178,47 @@
       "creditos": 100,
       "maestroId": "2",
       "fechaCreacion": "2024-11-18T09:14:20.346Z"
+    },
+    {
+      "id": "64",
+      "nombre": "swift",
+      "creditos": 75,
+      "maestroId": "302",
+      "fechaCreacion": "2024-12-12T07:40:34.301Z"
+    }
+  ],
+  "inscripciones": [
+    {
+      "id": "530",
+      "alumnoId": "1",
+      "materiaId": "53",
+      "fechaInscripciones": "2024-12-12T05:05:12.455Z",
+      "usuarioNombre": "manuel",
+      "usuarioId": "1"
+    },
+    {
+      "alumnoId": "1",
+      "materiaId": "148",
+      "id": "939",
+      "fechaInscripciones": "2024-12-12T05:15:21.471Z",
+      "usuarioNombre": "manuel",
+      "usuarioId": "1"
+    },
+    {
+      "alumnoId": "2",
+      "materiaId": "148",
+      "id": "197",
+      "fechaInscripciones": "2024-12-12T05:32:58.795Z",
+      "usuarioNombre": "Juan",
+      "usuarioId": "3"
+    },
+    {
+      "id": "923",
+      "alumnoId": "45",
+      "materiaId": "64",
+      "fechaInscripciones": "2024-12-12T07:41:23.802Z",
+      "usuarioNombre": "mickey",
+      "usuarioId": "711"
     }
   ]
 }

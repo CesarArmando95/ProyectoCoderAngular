@@ -4,7 +4,6 @@ import { Materia, Maestro } from '../../../../modelos';
 export const MateriasActions = createActionGroup({
   source: 'Materias',
   events: {
-    'Load Materiass': emptyProps(),
     //consultar materias
     'Cargar materias': emptyProps(),
     'Cargar materias Exito': props<{data: Materia[]}>(),

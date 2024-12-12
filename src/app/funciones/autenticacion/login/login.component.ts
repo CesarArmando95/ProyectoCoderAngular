@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  passwordInputType: 'contrasena' | 'text' = 'contrasena';
+  passwordInputType: 'password' | 'text' = 'password';
 
   loginForm: FormGroup;
 
@@ -31,10 +31,10 @@ export class LoginComponent {
   }
 
   togglePasswordInputType(): void {
-    if (this.passwordInputType === 'contrasena') {
+    if (this.passwordInputType === 'password') {
       this.passwordInputType = 'text';
     } else {
-      this.passwordInputType = 'contrasena';
+      this.passwordInputType = 'password';
     }
   }
 

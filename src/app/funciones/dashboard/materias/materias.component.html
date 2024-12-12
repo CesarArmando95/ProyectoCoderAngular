@@ -5,7 +5,7 @@
       <mat-spinner></mat-spinner>
     }
     @else {
-      <button mat-button (click)="openModal()">
+      <button *ngIf="this.rol === 'admin'" mat-button (click)="openModal()">
         <mat-icon> add </mat-icon>
         Crear materia
       </button>
